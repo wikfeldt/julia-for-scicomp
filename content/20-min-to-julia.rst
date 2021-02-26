@@ -45,12 +45,10 @@ After installing Julia, you can run Julia code in various ways:
 
 3. `Pluto.jl <https://github.com/fonsp/Pluto.jl>`_
 
-   Pluto offers a similar notebook experience to Jupyter, but apart 
-   from being *interactive* it's also *reactive* - changing and rerunning
-   a code cell automatically updates all cells that depend on it.
-   Pluto also doesn't have any hidden workspace state - removing a code
-   cell defining a variable makes that variable undefined.
-   
+   Pluto offers a similar notebook experience to Jupyter, but in contrast
+   to Jupyter
+   Pluto understands global references between cells, and
+   reactively re-evaluates cells affected by a code change.
 
 4. Juno or VSCode
    
