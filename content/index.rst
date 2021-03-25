@@ -59,8 +59,14 @@ Intro
 Who is the course for?
 ----------------------
 
-
-
+This lesson material is targeted towards students, researchers and developers
+who:
+ - are already familiar with one or more programming languages (Python, R, C/C++, Fortran, Matlab, ...)
+ - want to add a new exciting high-level yet performant language to their reportoar
+ - might be mixing a high-level and a low-level language for performance reasons but want to make their life easier
+ - need to analyze big data or perform computationally demanding modeling, analysis or simulations
+ - want to develop code HPC systems and/or graphical processing units (GPUs) but prefer to stay within a
+   productive high-level language.
 
 
 About the course
@@ -79,32 +85,8 @@ in the following pages::
 
   - https://github.com/csc-training/julia-introduction/
 
-See also
---------
-
-
-
 
 
 Credits
 -------
 
-
-
-See also
---------
-
-
-
-
-
-Credits
--------
-
-
-
-
-
-
-Credits
--------
