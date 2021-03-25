@@ -1,5 +1,5 @@
-LESSON NAME
-===========
+Julia for high-performance scientific computing
+===============================================
 
 Intro
 
