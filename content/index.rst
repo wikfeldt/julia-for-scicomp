@@ -15,7 +15,7 @@ Intro
    :widths: auto
    :delim: ;
 
-   20 min ; :doc:`20-min-to-julia`
+   20 min ; :doc:`notebooks/20-min-to-julia`
    20 min ; :doc:`multiple-dispatch`
 
 
@@ -24,7 +24,7 @@ Intro
    :maxdepth: 1
    :caption: The lesson
 
-   20-min-to-julia
+   notebooks/20-min-to-julia
    motivation
    multiple-dispatch
    performant-code
