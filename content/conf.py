@@ -20,8 +20,8 @@
 project = 'Julia for high-performance scientific computing'
 copyright = '2020, The contributors'
 author = 'The contributors'
-github_user = 'coderefinery'
-github_repo_name = ''  # auto-detected from dirname if blank
+github_user = 'wikfeldt'
+github_repo_name = 'julia-for-scicomp'  # auto-detected from dirname if blank
 github_version = 'master'
 conf_py_path = '/content/' # with leading and trailing slash
 
