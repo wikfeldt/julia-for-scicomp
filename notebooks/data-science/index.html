@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Working with data &mdash; Julia for high-performance scientific computing</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/mystnb.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/sphinx_lesson.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/sphinx_rtd_theme_ext_color_contrast.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/togglebutton.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/minipres.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../" class="icon icon-home"> Julia for high-performance scientific computing
+          
+
+          
+            
+            <img src="../../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">The lesson</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../20-min-to-julia/">20 minutes to Julia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../motivation/">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../multiple-dispatch/">Types and multiple dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data-science/">Working with data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../visualization/">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../statistics-modeling/">Statistical and mathematical modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performant-code/">Writing performant Julia code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules-packaging/">Modules and packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../calling-c-fortran/">Wrapping  C/C++ and Fortran code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threading/">Multi-threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../GPU/">GPU programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../distributed/">Distributed computing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-reference/">Quick Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/">Instructor’s guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Julia for high-performance scientific computing</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Working with data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/wikfeldt/julia-for-scicomp/blob/master/content/notebooks/data-science.ipynb" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="working-with-data">
+<h1>Working with data<a class="headerlink" href="#working-with-data" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-questions questions admonition">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How can I manipulate and wrangle data in Julia?</p></li>
+<li><p>What packages exist?</p></li>
+</ul>
+</div>
+<div class="admonition-objectives objectives admonition">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Learn to efficiently use data frames</p></li>
+<li><p>Learn some good practices around tidy data</p></li>
+</ul>
+</div>
+<div class="section" id="the-data">
+<h2>The data<a class="headerlink" href="#the-data" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="p">;</span><span class="n">ls</span> <span class="o">../</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LICENSE_TEXTS.md
+abyss.txt
+isles.txt
+last.txt
+sierra.txt
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="p">;</span><span class="n">head</span> <span class="o">../</span><span class="n">data</span><span class="o">/</span><span class="n">abyss</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>THE PEOPLE OF THE ABYSS
+
+
+The chief priests and rulers cry:-
+
+   &quot;O Lord and Master, not ours the guilt,
+   We build but as our fathers built;
+   Behold thine images how they stand
+   Sovereign and sole through all our land.
+</pre></div>
+</div>
+</div>
+</div>
+<p>We want to count words in these texts and see if the frequency distribution obeys Zipf’s law.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">load_text</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="n">file</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">readlines</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">lines</span>
+    <span class="k">end</span>    
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>load_text (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">load_text</span><span class="p">(</span><span class="s">&quot;../data/abyss.txt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6514-element Vector{String}:
+ &quot;THE PEOPLE OF THE ABYSS&quot;
+ &quot;&quot;
+ &quot;&quot;
+ &quot;The chief priests and rulers cry:-&quot;
+ &quot;&quot;
+ &quot;   \&quot;O Lord and Master, not ours the guilt,&quot;
+ &quot;   We build but as our fathers built;&quot;
+ &quot;   Behold thine images how they stand&quot;
+ &quot;   Sovereign and sole through all our land.&quot;
+ &quot;&quot;
+ &quot;   \&quot;Our task is hard--with sword and flame,&quot;
+ &quot;   To hold thine earth forever the same,&quot;
+ &quot;   And with sharp crooks of steel to keep,&quot;
+ ⋮
+ &quot;&quot;
+ &quot;&quot;
+ &quot;Footnotes:&quot;
+ &quot;&quot;
+ &quot;&quot;
+ &quot;{1}  This in the Klondike.--J. L.&quot;
+ &quot;&quot;
+ &quot;{2}  \&quot;Runt\&quot; in America is the equivalent of the English \&quot;crowl,\&quot; the&quot;
+ &quot;dwarf of a litter.&quot;
+ &quot;&quot;
+ &quot;{3}  The San Francisco bricklayer receives twenty shillings per day, and&quot;
+ &quot;at present is on strike for twenty-four shillings.&quot;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="nobel-dataset">
+<h2>Nobel dataset<a class="headerlink" href="#nobel-dataset" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">DataFrames</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>ArgumentError: Package DataFrames not found in current path:
+- Run `import Pkg; Pkg.add(&quot;DataFrames&quot;)` to install the DataFrames package.
+
+
+Stacktrace:
+ [1] require(into::Module, mod::Symbol)
+   @ Base ./loading.jl:871
+ [2] eval
+   @ ./boot.jl:360 [inlined]
+ [3] include_string(mapexpr::typeof(REPL.softscope), mod::Module, code::String, filename::String)
+   @ Base ./loading.jl:1094
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="p">;</span><span class="n">ls</span> <span class="o">../</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LICENSE_TEXTS.md
+abyss.txt
+isles.txt
+last.txt
+sierra.txt
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=q_P2H_ZXVxI">Best Julia Data Manipulation packages combo 2020-09</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, The contributors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

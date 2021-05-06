@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Modules and packaging &mdash; Julia for high-performance scientific computing</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/mystnb.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_lesson.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/togglebutton.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Wrapping C/C++ and Fortran code" href="../calling-c-fortran/" />
+    <link rel="prev" title="Writing performant Julia code" href="../performant-code/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../" class="icon icon-home"> Julia for high-performance scientific computing
+          
+
+          
+            
+            <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">The lesson</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/20-min-to-julia/">20 minutes to Julia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../motivation/">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-dispatch/">Types and multiple dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-science/">Working with data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../statistics-modeling/">Statistical and mathematical modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performant-code/">Writing performant Julia code</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Modules and packaging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#where-can-i-find-existing-packages">Where can I find existing packages?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#see-also">See also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../calling-c-fortran/">Wrapping  C/C++ and Fortran code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threading/">Multi-threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GPU/">GPU programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributed/">Distributed computing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick-reference/">Quick Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/">Instructor’s guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Julia for high-performance scientific computing</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Modules and packaging</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/wikfeldt/julia-for-scicomp/blob/master/content/modules-packaging.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="modules-and-packaging">
+<h1>Modules and packaging<a class="headerlink" href="#modules-and-packaging" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-questions questions admonition">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How do modules work in Julia?</p></li>
+<li><p>How can I create a new package?</p></li>
+<li><p>How can I create reprodubible environments?</p></li>
+</ul>
+</div>
+<div class="admonition-objectives objectives admonition">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Learn to use and extend modules in Julia</p></li>
+<li><p>See how you can create your own Julia packages and share them</p></li>
+<li><p>Learn to use Project.toml files for reproducibility</p></li>
+</ul>
+</div>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="where-can-i-find-existing-packages">
+<h2>Where can I find existing packages?<a class="headerlink" href="#where-can-i-find-existing-packages" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.julialang.org/en/v1/manual/faq/#Packages-and-Modules">https://docs.julialang.org/en/v1/manual/faq/#Packages-and-Modules</a></p></li>
+<li><p><a class="reference external" href="https://docs.julialang.org/en/v1/manual/code-loading/#Federation-of-packages">https://docs.julialang.org/en/v1/manual/code-loading/#Federation-of-packages</a></p></li>
+<li><p><a class="reference external" href="https://julialang.github.io/Pkg.jl/v1/creating-packages/">https://julialang.github.io/Pkg.jl/v1/creating-packages/</a></p></li>
+<li><p><a class="reference external" href="https://juliahub.com/ui/Home">https://juliahub.com/ui/Home</a></p></li>
+<li><p><a class="reference external" href="https://discourse.julialang.org/t/experimental-reproducibility-julia-vs-the-rest/46769/6">https://discourse.julialang.org/t/experimental-reproducibility-julia-vs-the-rest/46769/6</a></p></li>
+<li><p><a class="reference external" href="https://julialang.github.io/Pkg.jl/v1/environments/">https://julialang.github.io/Pkg.jl/v1/environments/</a></p></li>
+<li><p><a class="reference external" href="https://docs.julialang.org/en/v1.0/stdlib/Pkg/">https://docs.julialang.org/en/v1.0/stdlib/Pkg/</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../calling-c-fortran/" class="btn btn-neutral float-right" title="Wrapping C/C++ and Fortran code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../performant-code/" class="btn btn-neutral float-left" title="Writing performant Julia code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, The contributors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Working with data"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "```{questions}\n",
+    "   - How can I manipulate and wrangle data in Julia?\n",
+    "   - What packages exist?\n",
+    "``` "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "```{objectives}\n",
+    "   - Learn to efficiently use data frames \n",
+    "   - Learn some good practices around tidy data\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## The data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "LICENSE_TEXTS.md\n",
+      "abyss.txt\n",
+      "isles.txt\n",
+      "last.txt\n",
+      "sierra.txt\n"
+     ]
+    }
+   ],
+   "source": [
+    ";ls ../data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "THE PEOPLE OF THE ABYSS\n",
+      "\n",
+      "\n",
+      "The chief priests and rulers cry:-\n",
+      "\n",
+      "   \"O Lord and Master, not ours the guilt,\n",
+      "   We build but as our fathers built;\n",
+      "   Behold thine images how they stand\n",
+      "   Sovereign and sole through all our land.\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    ";head ../data/abyss.txt"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We want to count words in these texts and see if the frequency distribution obeys Zipf's law."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "load_text (generic function with 1 method)"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "function load_text(filename)\n",
+    "    open(filename, \"r\") do file\n",
+    "        lines = readlines(file)\n",
+    "        return lines\n",
+    "    end    \n",
+    "end"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "6514-element Vector{String}:\n",
+       " \"THE PEOPLE OF THE ABYSS\"\n",
+       " \"\"\n",
+       " \"\"\n",
+       " \"The chief priests and rulers cry:-\"\n",
+       " \"\"\n",
+       " \"   \\\"O Lord and Master, not ours the guilt,\"\n",
+       " \"   We build but as our fathers built;\"\n",
+       " \"   Behold thine images how they stand\"\n",
+       " \"   Sovereign and sole through all our land.\"\n",
+       " \"\"\n",
+       " \"   \\\"Our task is hard--with sword and flame,\"\n",
+       " \"   To hold thine earth forever the same,\"\n",
+       " \"   And with sharp crooks of steel to keep,\"\n",
+       " ⋮\n",
+       " \"\"\n",
+       " \"\"\n",
+       " \"Footnotes:\"\n",
+       " \"\"\n",
+       " \"\"\n",
+       " \"{1}  This in the Klondike.--J. L.\"\n",
+       " \"\"\n",
+       " \"{2}  \\\"Runt\\\" in America is the equivalent of the English \\\"crowl,\\\" the\"\n",
+       " \"dwarf of a litter.\"\n",
+       " \"\"\n",
+       " \"{3}  The San Francisco bricklayer receives twenty shillings per day, and\"\n",
+       " \"at present is on strike for twenty-four shillings.\""
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "load_text(\"../data/abyss.txt\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Nobel dataset"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "LoadError",
+     "evalue": "ArgumentError: Package DataFrames not found in current path:\n- Run `import Pkg; Pkg.add(\"DataFrames\")` to install the DataFrames package.\n",
+     "output_type": "error",
+     "traceback": [
+      "ArgumentError: Package DataFrames not found in current path:\n- Run `import Pkg; Pkg.add(\"DataFrames\")` to install the DataFrames package.\n",
+      "",
+      "Stacktrace:",
+      " [1] require(into::Module, mod::Symbol)",
+      "   @ Base ./loading.jl:871",
+      " [2] eval",
+      "   @ ./boot.jl:360 [inlined]",
+      " [3] include_string(mapexpr::typeof(REPL.softscope), mod::Module, code::String, filename::String)",
+      "   @ Base ./loading.jl:1094"
+     ]
+    }
+   ],
+   "source": [
+    "using DataFrames"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "LICENSE_TEXTS.md\n",
+      "abyss.txt\n",
+      "isles.txt\n",
+      "last.txt\n",
+      "sierra.txt\n"
+     ]
+    }
+   ],
+   "source": [
+    ";ls ../data"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## See also\n",
+    "\n",
+    "- [Best Julia Data Manipulation packages combo 2020-09](https://www.youtube.com/watch?v=q_P2H_ZXVxI)\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Julia 1.6.0",
+   "language": "julia",
+   "name": "julia-1.6"
+  },
+  "language_info": {
+   "file_extension": ".jl",
+   "mimetype": "application/julia",
+   "name": "julia",
+   "version": "1.6.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

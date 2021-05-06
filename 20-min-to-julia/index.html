@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>20 minutes to Julia &mdash; Julia for high-performance scientific computing</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/mystnb.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_lesson.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/togglebutton.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../" class="icon icon-home"> Julia for high-performance scientific computing
+          
+
+          
+            
+            <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">The lesson</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/20-min-to-julia/">20 minutes to Julia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../motivation/">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-dispatch/">Types and multiple dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-science/">Working with data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../statistics-modeling/">Statistical and mathematical modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performant-code/">Writing performant Julia code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules-packaging/">Modules and packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../calling-c-fortran/">Wrapping  C/C++ and Fortran code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threading/">Multi-threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GPU/">GPU programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributed/">Distributed computing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick-reference/">Quick Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/">Instructor’s guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Julia for high-performance scientific computing</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>20 minutes to Julia</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/wikfeldt/julia-for-scicomp/blob/master/content/20-min-to-julia.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="minutes-to-julia">
+<h1>20 minutes to Julia<a class="headerlink" href="#minutes-to-julia" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-questions questions admonition">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>What does the basic syntax of Julia look like?</p></li>
+<li><p>How does Julia handle types?</p></li>
+<li><p>What IDEs and editors work with Julia?</p></li>
+</ul>
+</div>
+<div class="admonition-objectives objectives admonition">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Get familiar with the basics of Julia in 20 minutes.</p></li>
+</ul>
+</div>
+<p>This section give a compact overview of the basic features
+and syntax of Julia.</p>
+<div class="section" id="running-julia">
+<h2>Running Julia<a class="headerlink" href="#running-julia" title="Permalink to this headline">¶</a></h2>
+<p>After installing Julia, you can run Julia code in various ways:</p>
+<ol class="arabic">
+<li><p><a class="reference external" href="https://docs.julialang.org/en/v1/stdlib/REPL/">REPL</a></p>
+<p>A REPL (read-evaluate-print loop) reads input, evaluates
+the expression, prints any output and then loops back.
+Julia’s REPL is highly versatile and is useful for exploratory work.
+The Julia REPL has four modes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Julian mode</strong> - default mode where prompt starts with <code class="docutils literal notranslate"><span class="pre">julia&gt;</span></code>.
+Here you enter Julia expressions and see output.</p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">?</span></code> to go to <strong>Help mode</strong> where prompt starts with <code class="docutils literal notranslate"><span class="pre">help?&gt;</span></code>.
+Julia will print help/documentation on anything you enter.</p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">;</span></code> to go to <strong>Shell mode</strong> where prompt starts with
+<code class="docutils literal notranslate"><span class="pre">shell&gt;</span></code>. You can type any shell commands as you would from terminal.</p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">]</span></code> to go to <strong>Package mode</strong> where prompt starts with
+<code class="docutils literal notranslate"><span class="pre">(&#64;v1.5)</span> <span class="pre">pkg&gt;</span></code> (if you have Julia version 1.5). Here you can add
+packages with <code class="docutils literal notranslate"><span class="pre">add`,</span> <span class="pre">update</span> <span class="pre">packages</span> <span class="pre">with</span> <span class="pre">``update</span></code> etc. To see
+all options type <code class="docutils literal notranslate"><span class="pre">?</span></code>.</p></li>
+<li><p>To exit any non-Julian mode, hit Escape key.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><a class="reference external" href="https://jupyter.org/">Jupyter</a></p>
+<p>Jupyter notebooks are familiar to many Python and R users. WRITEME</p>
+</li>
+<li><p><a class="reference external" href="https://github.com/fonsp/Pluto.jl">Pluto.jl</a></p>
+<p>Pluto offers a similar notebook experience to Jupyter, but in contrast
+to Jupyter
+Pluto understands global references between cells, and
+reactively re-evaluates cells affected by a code change.</p>
+</li>
+<li><p>Juno or VSCode</p></li>
+</ol>
+<div class="admonition-callout callout admonition">
+<p class="admonition-title">Callout</p>
+<p>You can copy code cells below by pressing the button in the top right
+corner, and paste into the REPL, a notebook or and IDE.</p>
+</div>
+</div>
+<div class="section" id="basic-syntax">
+<h2>Basic syntax<a class="headerlink" href="#basic-syntax" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<p>We only need to specify name and value of variables,
+Julia figures out the type:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="mf">3.14</span>               <span class="c"># scalar, float</span>
+<span class="n">B</span> <span class="o">=</span> <span class="mi">100</span>                <span class="c"># scalar, integer</span>
+<span class="n">C</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>          <span class="c"># array / column-vector (1,2,3)</span>
+<span class="n">D</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>            <span class="c"># 1 by 3 array (1,2,3)</span>
+<span class="n">E</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span><span class="o">&#39;</span>           <span class="c"># 3 by 1 array (1,2,3)</span>
+<span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">;</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span>         <span class="c"># 2-by-2 matrix</span>
+<span class="n">S</span> <span class="o">=</span> <span class="s">&quot;hello world&quot;</span>      <span class="c"># string</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">true</span>               <span class="c"># boolean</span>
+</pre></div>
+</div>
+<p>To see the type of a variable use <cite>typeof</cite>:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">typeof</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>test output
+</pre></div>
+</div>
+<p>We can</p>
+</div>
+<div class="section" id="arrays">
+<h3>Arrays<a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h3>
+<p>Constructing a few simple matrices:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                       <span class="c"># random length-5 vector, uniform numbers in [0,1)</span>
+<span class="n">rand</span><span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>                  <span class="c"># random length-5 vector with integers</span>
+<span class="n">rand</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>                    <span class="c"># random 12×4 matrix</span>
+<span class="n">randn</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>                     <span class="c"># Gaussian random numbers (mean 0, std. dev. 1)</span>
+<span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                        <span class="c"># 5×5 identity matrix I</span>
+<span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">stop</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c"># 100 equally spaced points from 0 to 2*pi</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>booleans, numbers (int, float), strings and chars</p></li>
+<li><p>vectors, matrices</p></li>
+<li><p>tuples, named tuples</p></li>
+<li><p>dictionaries</p></li>
+<li><p>composite types - structs</p></li>
+<li><p>abstract types - e.g. supertype(Float64)</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="loops-and-conditionals">
+<h2>Loops and conditionals<a class="headerlink" href="#loops-and-conditionals" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>for, if-else, while,</p></li>
+<li><p>iterators</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>named and anonymous functions</p></li>
+<li><p>optional arguments</p></li>
+<li><p>keyword arguments</p></li>
+<li><p>multiple dispatch</p></li>
+<li><p>splatting</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="packages">
+<h2>Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="repl-and-ides">
+<h2>REPL and IDEs<a class="headerlink" href="#repl-and-ides" title="Permalink to this headline">¶</a></h2>
+<p>A REPL (read-evaluate-print loop) reads input, evaluates
+the expression, prints any output and then loops back.
+Julia’s REPL is highly versatile:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="o">?</span><span class="n">sum</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Pluto.jl</p></li>
+<li><p>Weave.jl</p></li>
+<li><p>Jupyter</p></li>
+</ul>
+</div>
+<div class="section" id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><cite>Learn X in Y minutes (Where X = Julia) &lt;https://learnxinyminutes.com/docs/julia/&gt;</cite></p></li>
+<li><p>Berhane, Fisseha. (2019) R vs Julia Cheatsheet. Available at:
+<a class="reference external" href="https://datascience-enthusiast.com/R/R_Julia_cheat_sheet.html">https://datascience-enthusiast.com/R/R_Julia_cheat_sheet.html</a>. (Accessed
+December 21, 2019).</p></li>
+<li><p>(2019) The Fast Track to Julia. Available at:
+<a class="reference external" href="https://juliadocs.github.io/Julia-Cheat-Sheet/">https://juliadocs.github.io/Julia-Cheat-Sheet/</a>. (Accessed December
+21, 2019).</p></li>
+<li><p>Gregory, Victoria, Andrij Stachurski, and Natasha Watkins. (2017a)
+Julia Cheatsheet. Available at:
+<a class="reference external" href="https://cheatsheets.quantecon.org/julia-cheatsheet.html">https://cheatsheets.quantecon.org/julia-cheatsheet.html</a>. (Accessed
+December 21, 2019).</p></li>
+<li><p>Gregory, Victoria, Andrij Stachurski, and Natasha Watkins. (2017b)
+MATLAB–Python–Julia Cheatsheet. Available at:
+<a class="reference external" href="https://cheatsheets.quantecon.org/">https://cheatsheets.quantecon.org/</a>. (Accessed December 21, 2019).</p></li>
+<li><p>Johnson, Steven G. (2017) Julia &amp; IJulia Cheat-Sheet (for 18.Xxx at
+MIT). Available at:
+<a class="reference external" href="http://math.mit.edu/%7Estevenj/Julia-cheatsheet.pdf">http://math.mit.edu/%7Estevenj/Julia-cheatsheet.pdf</a>. (Accessed
+December 21, 2019).</p></li>
+<li><p>Bezanson, Jeff, Stefan Karpinski, Viral Shah, and Alan
+Edelman. (2020) The Julia Language. The Julia Project. Available at:
+<a class="reference external" href="Https://raw.githubusercontent.com/JuliaLang/docs.julialang.org/assets/julia-1.5.3.pdf">Https://raw.githubusercontent.com/JuliaLang/docs.julialang.org/assets/julia-1.5.3.pdf</a>. (Accessed
+January 28, 2021).</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, The contributors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
