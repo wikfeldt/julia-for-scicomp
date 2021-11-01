@@ -18,6 +18,7 @@ Intro
    20 min ; :doc:`notebooks/20-min-to-julia`
    20 min ; :doc:`multiple-dispatch`
    20 min ; :doc:`data-science`   
+   20 min ; :doc:`notebooks/data-science`   
    20 min ; :doc:`visualization`
    20 min ; :doc:`statistics-modeling`   
    20 min ; :doc:`performant-code`
@@ -49,6 +50,7 @@ Intro
    :maxdepth: 1
    :caption: Reference
 
+   setup
    quick-reference
    guide
 
