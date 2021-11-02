@@ -49,16 +49,42 @@ We can write Julia code in various ways:
 Basic syntax
 ------------
 
-+------------------+---------------------+-------------------------+
-| Feature          | Example syntax      | Result / meaning        |
-+==================+=====================+=========================+
-| Basic arithmetic | - ``2 + 3 * 1.1``   | - Summing, multiplying  |
-|                  | - ``2^3``           | - Power                 |
-|                  | - ``exp(pi*im)``    | - Complex exponentiation|
-|                  | - ``sin(2*pi)``     | - Trigonometry          |
-+------------------+---------------------+-------------------------+
-| Variables        | - ``A = 3.14``        | - Scalar, float         |
-|                  | - ``B = 10``          | - Scalar, integer       |
-|                  | - ``S = "hello"``     | - String                |
-|                  | - ``x = true``        | - Boolean               |
-+------------------+---------------------+-------------------------+
++------------------+------------------------------------+---------------------------------+
+| Feature          | Example syntax                     | Result / meaning                |
++==================+====================================+=================================+
+| Basic arithmetic | - ``2 + 3 * 1.1``                  | - Summing, multiplying          |
+|                  | - ``2^3``                          | - Power                         |
+|                  | - ``exp(pi*im)``                   | - Complex exponentiation        |
+|                  | - ``sin(2*pi)``                    | - Trigonometry                  |
++------------------+------------------------------------+---------------------------------+
+| Variables        | - ``A = 3.14``                     | - Scalar, float                 |
+|                  | - ``B = 10``                       | - Scalar, integer               |
+|                  | - ``C = "hello"``                  | - String                        |
+|                  | - ``D = true``                     | - Boolean                       |
+|                  | - ``typeof(A)``                    | - Find type                     |
+|                  | - ``println("A = $A")``            | - Print using interpolation     |
++------------------+------------------------------------+---------------------------------+
+| Special values   | - ``Inf``                          | - Infinity (e.g. ``1 / 0``)     |
+|                  | - ``Nan``                          | - Not a number (e.g. ``0 / 0``) |
+|                  | - ``nothing``                      | - e.g. for variables w/o value  |
++------------------+------------------------------------+---------------------------------+
+| 1D arrays        | - ``a = [1, 2, 3, 4]``             | - 4-element Vector{Int64}       |
+|                  | - ``Float64[1,2]``                 | - 2-element Vector{Float64}     |
+|                  | - ``[1:5;]``                       | - 5-element Array{Int64,1}      |
+|                  | - ``[1:5]``                        | - 1-element vector with a range |
+|                  | - ``[range(0,stop=2π,length=5);]`` | - 5-element Vector{Float64}     |
+|                  | - ``rand(5)``                      | - random 5-elem vector in [0,1) |
+|                  | - ``rand(Int, 5)``                 | - random vector with integers   |
+|                  | - ``ones(5)``                      | - 5-elem vector with FP64 ones  |
+|                  | - ``zeros(5)``                     | - 5-elem vector with FP64 zeros |
++------------------+------------------------------------+---------------------------------+
+| Indexing and     | - ``a[1]``                         | - first element                 |
+| slicing          | - ``a[1:3]``                       | - 3-element vector              |
+|                  | - ``a[3:end]``                     | - ``end`` is last element       |
+|                  | - ``a[1:2:end]``                   | - step size of 2                |
+|                  | - ``a[3:end]``                     | - ``end`` is last element       |
+|                  | - ``a[3:end]``                     | - ``end`` is last element       |
++------------------+------------------------------------+---------------------------------+
+| Multidimensional | - ``mat = [1 2; 3 4]``             | - 2×2 Matrix{Int64}             |
+| arrays           |                                    |                                 |
++------------------+------------------------------------+---------------------------------+
