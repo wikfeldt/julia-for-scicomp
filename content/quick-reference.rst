@@ -37,6 +37,7 @@ We can write Julia code in various ways:
    reactively re-evaluates cells affected by a code change.
 
 4. `Visual Studio Code <https://code.visualstudio.com/>`_ (VSCode)
+
    - a full-fledged Integrated Development Environment which is
      very useful for larger codebases. Extensions are needed to
      activate Julia inside VSCode, see the `official documentation
@@ -68,6 +69,7 @@ Basic syntax
 |                  | - ``D = true``                     | - Boolean                       |
 |                  | - ``typeof(A)``                    | - Find type                     |
 |                  | - ``println("A = $A")``            | - Print using interpolation     |
+|                  | - ``δ = 0.01``                     | - Unicode names, LaTeX symbols  |
 +------------------+------------------------------------+---------------------------------+
 | Special values   | - ``Inf``                          | - Infinity (e.g. ``1 / 0``)     |
 |                  | - ``Nan``                          | - Not a number (e.g. ``0 / 0``) |
@@ -85,6 +87,7 @@ Basic syntax
 |                  | - ``rand(Int, 5)``                 | - random vector with integers   |
 |                  | - ``ones(5)``                      | - 5-elem vector with FP64 ones  |
 |                  | - ``zeros(5)``                     | - 5-elem vector with FP64 zeros |
+|                  | - ``[1,2,3].^2``                   | - Element-wise dot-operation    |
 +------------------+------------------------------------+---------------------------------+
 | Indexing and     | - ``a[1]``                         | - first element                 |
 | slicing          | - ``a[1:3]``                       | - 3-element vector              |
@@ -171,6 +174,7 @@ around like any other value (functions in Julia are `first-class objects`):
 	  g = f;
 	  g(4,5)
 
+
 Functions can be combined by composition:
 
 .. code::
@@ -194,6 +198,14 @@ Most operators (``+``, ``-``, ``*`` etc) are in fact functions, and can be used 
 
 	  # composition:
 	  (sqrt ∘ +)(3, 6)  # 3.0 (first summation, then square root)
+
+Just like Vectors and Arrays can be operated on element-wise (vectorized)
+by dot-operators (e.g. ``[1, 2, 3].^2``), functions can also be vectorized:
+
+.. code:: julia
+
+	  sin.([1.0, 2.0, 3.0])
+	  
 	  
 Keyword arguments can be added after ``;``, which is useful for functions
 with many arguments and it can be difficult to remember the correct order:
@@ -204,7 +216,7 @@ with many arguments and it can be difficult to remember the correct order:
 	      println("$greeting $dog_name")
 	  end
 
-	  greet_dog(dog_name = "Coco")   # "Hi Coco"
+	  greet_dog(dog_name = "Coco", greeting = "Go fetch")   # "Go fetch Coco"
 
 
 Optional arguments are given default value:
@@ -278,3 +290,67 @@ Julia functions can be piped (chained) together:
 
 	  
 	 
+Exception handling
+------------------
+
+Exceptions are thrown when an unexpected condition has occurred:
+
+.. code:: julia
+
+	  sqrt(-1)
+
+.. code:: output
+
+   DomainError with -1.0:
+   sqrt will only return a complex result if called with a complex argument. Try sqrt(Complex(x)).
+
+   Stacktrace:
+     [1] throw_complex_domainerror(::Symbol, ::Float64) at ./math.jl:33
+     [2] sqrt at ./math.jl:573 [inlined]
+     [3] sqrt(::Int64) at ./math.jl:599
+     [4] top-level scope at In[130]:1
+     [5] include_string(::Function, ::Module, ::String, ::String) at ./loading.jl:1091
+
+Exceptions can be handled with a try/catch block:
+
+.. code:: julia
+
+	  try
+	      sqrt(-1)
+	  catch e
+	      println("caught the error: $e")
+	  end
+
+.. code:: output
+
+	  caught the error: DomainError(-1.0, "sqrt will only return a complex result if called with a complex argument. Try sqrt(Complex(x)).")
+
+
+Exceptions can be created explicitly with `throw`:
+
+.. code:: julia
+
+	  function negexp(x)
+	      if x>=0
+	          return exp(-x)
+	      else
+                  throw(DomainError(x, "argument must be non-negative"))
+	      end
+	  end
+
+	  
+
+Style conventions
+-----------------
+
+- Names of variables are in lower case.
+- Word separation can be indicated by underscores (`_`), but use of
+  underscores is discouraged unless the name would be hard to read
+  otherwise.
+- Names of Types and Modules begin with a capital letter and word
+  separation is shown with upper camel case instead of underscores.
+- Names of functions and macros are in lower case, without underscores.
+- Functions that write to their arguments have names that end in
+  ``!``. These are sometimes called "mutating" or "in-place" functions
+  because they are intended to produce changes in their arguments
+  after the function is called, not just return a value.
