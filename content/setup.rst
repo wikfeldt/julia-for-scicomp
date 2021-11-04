@@ -25,6 +25,15 @@ Follow the instructions to complete the installation.
 Also make sure to add Julia to your PATH by following the instructions at
 https://julialang.org/downloads/platform/.
 
+After these steps, please ensure that you can open the Julia REPL by
+typing ``julia`` on the command line in a terminal. You will hopefully
+see something like in the image below.
+
+.. figure:: img/repl.png
+   :align: center
+
+To exit the REPL again, hit ``CTRL-d`` or type ``exit()``.
+	   
 Installing JupyterLab and a Julia kernel
 ----------------------------------------
 
