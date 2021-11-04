@@ -10,6 +10,17 @@ Motivation
 
    - Get inspired to try Julia
 
+
+Programming languages
+
+---------------------
+
+
+
+Why Julia?
+
+----------
+
 Julia is a scientific programming language that is free and open
 source - see https://julialang.org/ for downloads, documentation,
 learning resources etc. 
@@ -22,3 +33,16 @@ Some advantages of Julia:
   via [LLVM](https://llvm.org/).
 
 
+The two-language problem
+
+------------------------
+
+
+Benchmarks
+
+----------
+
+
+Composability
+
+-------------
