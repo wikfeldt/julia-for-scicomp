@@ -15,7 +15,6 @@ Intro
    :widths: auto
    :delim: ;
 
-   20 min ; :doc:`notebooks/20-min-to-julia`
    20 min ; :doc:`multiple-dispatch`
    20 min ; :doc:`data-science`   
    20 min ; :doc:`notebooks/data-science`   
@@ -33,12 +32,10 @@ Intro
    :maxdepth: 1
    :caption: The lesson
 
-   notebooks/20-min-to-julia
    motivation
-   multiple-dispatch
-   data-science   
+   notebooks/overview
+   notebooks/data-science   
    visualization
-   statistics-modeling
    performant-code
    modules-packaging
    calling-c-fortran
