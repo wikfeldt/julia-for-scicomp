@@ -15,7 +15,8 @@ Intro
    :widths: auto
    :delim: ;
 
-   20 min ; :doc:`multiple-dispatch`
+   20 min ; :doc:`motivation`
+   20 min ; :doc:`overview`
    20 min ; :doc:`data-science`   
    20 min ; :doc:`notebooks/data-science`   
    20 min ; :doc:`visualization`
@@ -109,6 +110,12 @@ The lesson file structure and browsing layout is inspired by and derived from
 <http://opensource.org/licenses/mit-license.html>`_. We have copied and adapted
 most of their license text.
 
+Several examples and formulations are inspired by and derived from other Julia
+lessons, particularly:
+- `Carsten Bauer's 3-day Julia workshop <https://github.com/carstenbauer/JuliaCologne21>`_
+- `The Carpentry lesson Introduction to Julia <https://carpentries-incubator.github.io/julia-novice/>`_
+
+  
 Instructional Material
 ^^^^^^^^^^^^^^^^^^^^^^
 
