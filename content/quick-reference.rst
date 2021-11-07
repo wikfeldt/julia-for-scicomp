@@ -68,8 +68,9 @@ Basic syntax
 |                  | - ``C = "hello"``                  | - String                        |
 |                  | - ``D = true``                     | - Boolean                       |
 |                  | - ``typeof(A)``                    | - Find type                     |
-|                  | - ``println("A = $A")``            | - Print using interpolation     |
-|                  | - ``δ = 0.01``                     | - Unicode names, LaTeX symbols  |
+|                  | - ``supertype(Integer)``           | - Find supertypes               |
+|                  | - ``subtype(Integer)``             | - Find subtypes                 |
+|                  | - ``Integer <: Real``              | - "Subtype of", returns True    |
 +------------------+------------------------------------+---------------------------------+
 | Special values   | - ``Inf``                          | - Infinity (e.g. ``1 / 0``)     |
 |                  | - ``Nan``                          | - Not a number (e.g. ``0 / 0``) |
@@ -112,6 +113,9 @@ Basic syntax
 | Manipulating     | - ``push!(a, 10)``                 | - Append in-place               |
 | arrays           | - ``insert!(a, 1, 42)``            | - Insert in given position      |
 |                  | - ``append!(a, [3, 5, 7])``        | - Append another array          |
++------------------+------------------------------------+---------------------------------+
+| Miscellanous     | - ``δ = 0.1``  (type \delta <TAB>) | - Unicode names with LaTeX      |
+|                  | - ``println("A = $A")``            | - Print using interpolation     |
 +------------------+------------------------------------+---------------------------------+
 
 
@@ -248,7 +252,23 @@ Argument types can also be specified:
    function f(x::Float64, y::Float64)
        return x*y
    end
-      
+
+Additional **methods** can be added to functions simply by
+new definitions with different argument types:
+
+.. code:: julia
+
+   function f(x::Int64, y::Int64)
+       return x*y
+   end
+
+To find out which method is being dispatched for a particular
+function call:
+
+.. code:: julia
+
+	  @which f(3, 4)
+   
 As functions in Julia are first-class objects, they can be passed
 as arguments to other functions.
 `Anonymous functions` are useful for such constructs:
