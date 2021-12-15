@@ -5,11 +5,13 @@ Julia is a scientific programming language that is free and open
 source - see https://julialang.org/ for downloads, documentation,
 learning resources etc. Bridging high-level interpreted and low-level
 compiled languages, it offers high performance (comparable to C and
-Fortran) without sacrificing simplicity and programming
-productivity. Julia has a rich ecosystem of libraries aimed towards
-scientific computing and a powerful in-built package manager to
-install and manage their dependencies. Julia is also gaining ground in
-HPC as it supports both threading and distributed-memory
+Fortran) without sacrificing simplicity and programming productivity
+(like in Python or R).
+
+Julia has a rich ecosystem of libraries aimed
+towards scientific computing and a powerful in-built package manager
+to install and manage their dependencies. Julia is also gaining ground
+in HPC as it supports both threading and distributed-memory
 parallelization as well as GPU computing.
 
 This lesson starts with the basics of Julia, its syntax,
@@ -30,7 +32,7 @@ computing.
    :delim: ;
 
    20 min ; :doc:`motivation`
-   20 min ; :doc:`overview`
+   20 min ; :doc:`notebooks/overview`
    20 min ; :doc:`data-science`   
    20 min ; :doc:`notebooks/data-science`   
    20 min ; :doc:`visualization`
@@ -75,6 +77,7 @@ Who is the course for?
 
 This lesson material is targeted towards students, researchers and developers
 who:
+
  - are already familiar with one or more programming languages (Python, R, C/C++, Fortran, Matlab, ...)
  - want to add a new exciting high-level yet performant language to their reportoar
  - might be mixing a high-level and a low-level language for performance reasons but want to make their life easier

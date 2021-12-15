@@ -11,9 +11,47 @@ Motivation
    - Get inspired to try Julia
 
 
-Programming languages
+Why Julia?
+----------
 
----------------------
+Julia has been designed to be both fast and dynamic.
+In the words of its developers::
+
+   `We want a language that's open source, with a liberal license. We
+   want the speed of C with the dynamism of Ruby. We want a language
+   that's homoiconic, with true macros like Lisp, but with obvious,
+   familiar mathematical notation like Matlab. We want something as
+   usable for general programming as Python, as easy for statistics as
+   R, as natural for string processing as Perl, as powerful for linear
+   algebra as Matlab, as good at gluing programs together as the
+   shell. Something that is dirt simple to learn, yet keeps the most
+   serious hackers happy. We want it interactive and we want it
+   compiled. (Did we mention it should be as fast as C?)`
+
+   From `Why We Created Julia
+   <https://julialang.org/blog/2012/02/why-we-created-julia/>`_ by
+   Jeff Bezanson Stefan Karpinski Viral B. Shah Alan Edelman
+
+To run code in any programming language, some sort of translation into
+machine instructions (assembly code) needs to take place, but how
+this translation takes place differs between programming languages.
+*Interpreted* languages like Python and R translate instructions line
+by line, while *compiled* languages like C/C++ and Fortran are
+translated by a compiler prior to running the program. The benefits of
+interpreted languages are that they are easier to read and write
+because less information on aspects like types and array sizes needs
+to be provided.  Programmer productivity is thus higher in interpreted
+languages, but compiled languages can perform faster by orders of
+magnitude because the compiler can perform optimizations during the
+translation to assembly.
+
+In many ways Julia looks like an
+interpreted language.  and mostly behaves like one. But before each
+function is executed it will compile it just in time.
+
+Thus you get the flexibility of an interpreted language and the
+execution speed of the compiled language at the cost of waiting a bit
+longer for the first execution of any function.
 
 
 
@@ -21,9 +59,6 @@ Why Julia?
 
 ----------
 
-Julia is a scientific programming language that is free and open
-source - see https://julialang.org/ for downloads, documentation,
-learning resources etc. 
 
 Some advantages of Julia:
 
