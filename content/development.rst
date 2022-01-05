@@ -1,18 +1,20 @@
-Modules and packaging
-=====================
+Developing in Julia
+===================
 
 .. questions::
 
    - How do modules work in Julia?
-   - How can I create a new package?
+   - How do I create a new project?
    - How can I create reprodubible environments?
+   - How are tests written in Julia?
+   - How does scoping work?
      
 .. objectives::
 
-   - Learn to use and extend modules in Julia
-   - See how you can create your own Julia packages and share them
-   - Learn to use Project.toml files for reproducibility
-
+   - Learn to use, extend and write packages in Julia
+   - Learn how to create reproducible environments and add tests to your code
+   - Understand scoping in Julia
+     
 Modules
 -------
 
@@ -20,7 +22,22 @@ Modules
 Where can I find existing packages?
 -----------------------------------
 
+Creating a new project
+----------------------
 
+
+Adding tests
+------------
+
+- Test
+- ReTest
+- InlineTest
+
+**Should be installed in default environment, not in project**.
+VSCode imports it with the julia extension.
+
+
+  
 See also
 --------
 

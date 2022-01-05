@@ -32,14 +32,10 @@ computing.
    :delim: ;
 
    20 min ; :doc:`motivation`
-   20 min ; :doc:`notebooks/overview`
+   20 min ; :doc:`overview`
+   20 min ; :doc:`development`
    20 min ; :doc:`data-science`   
-   20 min ; :doc:`notebooks/data-science`   
-   20 min ; :doc:`visualization`
-   20 min ; :doc:`statistics-modeling`   
    20 min ; :doc:`performant-code`
-   20 min ; :doc:`modules-packaging`
-   20 min ; :doc:`calling-c-fortran`
    20 min ; :doc:`threading`
    20 min ; :doc:`GPU`         
    20 min ; :doc:`distributed`
@@ -50,12 +46,10 @@ computing.
    :caption: The lesson
 
    motivation
-   notebooks/overview
-   notebooks/data-science   
-   visualization
+   overview
+   development
+   data-science   
    performant-code
-   modules-packaging
-   calling-c-fortran
    threading
    GPU
    distributed
@@ -131,7 +125,7 @@ Several examples and formulations are inspired by and derived from other Julia
 lessons, particularly:
 - `Carsten Bauer's 3-day Julia workshop <https://github.com/carstenbauer/JuliaCologne21>`_
 - `The Carpentry lesson Introduction to Julia <https://carpentries-incubator.github.io/julia-novice/>`_
-
+- `Storopoli, Huijzer and Alonso (2021). Julia Data Science. ISBN: 9798489859165. <https://juliadatascience.io>`_
   
 Instructional Material
 ^^^^^^^^^^^^^^^^^^^^^^
