@@ -72,7 +72,7 @@ analyze the penguins dataset, but first we need to install it:
    using DataFrames
 
 
-.. callout:: Dataframes
+.. type-along:: Dataframes
 
    A dataframe is a 2-dimensional table of rows and columns, much 
    like a Excel spreadsheet. The rows usually represent independent 

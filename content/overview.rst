@@ -1,5 +1,5 @@
-Types and multiple dispatch
-===========================
+Special features of Julia
+=========================
 
 .. questions::
 

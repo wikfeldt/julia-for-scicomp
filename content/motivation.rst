@@ -32,6 +32,20 @@ In the words of its developers::
    <https://julialang.org/blog/2012/02/why-we-created-julia/>`_ by
    Jeff Bezanson Stefan Karpinski Viral B. Shah Alan Edelman
 
+Many researchers and programmers are drawn to Julia because of its
+speed. Indeed, Julia is among the few languages in the exclusive
+`petaflop club
+<https://www.hpcwire.com/off-the-wire/julia-joins-petaflop-club/>`_
+(along with C, C++ and Fortran).
+
+
+.. figure:: img/benchmarks.svg
+   :align: center
+
+   Micro-benchmarks comparing Julia with many other languages. Taken
+   from the `Julia benchmarks section
+   <https://julialang.org/benchmarks/>`_
+	   
 To run code in any programming language, some sort of translation into
 machine instructions (assembly code) needs to take place, but how
 this translation takes place differs between programming languages.
@@ -55,10 +69,6 @@ longer for the first execution of any function.
 
 
 
-Why Julia?
-
-----------
-
 
 Some advantages of Julia:
 
@@ -81,3 +91,15 @@ Benchmarks
 Composability
 
 -------------
+
+
+When not to use Julia
+---------------------
+
+- time to first plot (TTFP)
+
+  - no running multiple short jobs etc
+
+- large memory consumption
+
+  - huge runtime because of precompilation
