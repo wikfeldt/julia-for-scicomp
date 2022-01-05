@@ -35,12 +35,12 @@ extensions = [
     "sphinx.ext.githubpages",
     "sphinx_lesson",
     #'sphinx.ext.intersphinx',
-    "sphinxcontrib.bibtex",
+    #"sphinxcontrib.bibtex",
     "sphinx.ext.todo",
 ]
 
 # configure sphinxcontrib.bibtex
-bibtex_bibfiles = ["bibliography.bib"]
+#bibtex_bibfiles = ["bibliography.bib"]
 
 # Settings for myst_nb:
 # https://myst-nb.readthedocs.io/en/latest/use/execute.html#triggering-notebook-execution
