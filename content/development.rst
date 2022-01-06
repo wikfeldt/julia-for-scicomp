@@ -17,6 +17,49 @@ Developing in Julia
    - Understand scoping in Julia
      
 
+Tooling
+-------
+
+
+
+
+Structure of a Julia package
+----------------------------
+
+Code written in Julia is normally encapsulated in modules which 
+in turn are made available as a package that can be included in other 
+projects. 
+All functions, variables and custom types can be put in one 
+(possibly large) module file with the same name as the module, 
+or (more commonly) into multiple files
+according to the functionality (``core.jl``, ``io.jl``, ``utilities.jl``, ...).
+In the latter case, there is still one file with the name of the module 
+where the other files are imported, and the module's API is defined by 
+exported functions and types.
+
+- Look at a good example module here
+
+Modules are imported by either the ``using`` or ``import`` keywords.
+They work very similarly, the difference is how variables 
+defined in the module are brought into scope:
+
+- With ``using ModuleName``, all `exported` names (variables and functions) in the 
+  module are brought into scope
+- With ``import ModuleName``, the module's names need to be qualified, e.g. 
+  ``ModuleName.func()`` or ``ModuleName.var1``.
+
+To concretize Let us put the code we wrote in the previous episode into a 
+module called `Points`, and then discuss the consequences of 
+doing so.
+
+.. code-block:: julia
+
+
+
+-  look at a largish Julia package
+-  discuss scope and its rules
+
+
 Julia's package manager
 -----------------------
 
@@ -73,12 +116,13 @@ We now add the `Example` package by
    Pkg.add("Example")
    Pkg.status()
 
-The status command shows the version of the Example package installed in 
+The status command shows the version of the `Example` package installed in 
 our new ``Project.toml`` file.  
 What does this file contain? Try printing it through the Julia shell by 
 typing ``;`` followed by ``cat example-project/Project.toml``.
+
 We can also see that there's another file in the ``example-project`` directory
-called ``Manifest.toml``. 
+called ``Manifest.toml``...
 
 .. callout:: ``Project.toml`` and ``Manifest.toml``
    
