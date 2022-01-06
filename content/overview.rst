@@ -329,7 +329,7 @@ We can list all methods defined for a function:
 
 
 
-\```{callout} Methods and functions
+.. callout:: Methods and functions
 
 -  A **function** describing the “what” can have multiple **methods**
    describing the “how”
@@ -352,7 +352,7 @@ source code. The Julia runtime code generator produces an LLVM
 **Intermediate Representation** (IR) which the LLMV compiler then
 converts to machine code using sophisticated optimization technology.
 
-\```{callout} Just-in-time compilation vs interpreted and compiled
+.. callout:: Just-in-time compilation vs interpreted and compiled
 languages
 
 -  Interpreted languages rely on a runtime which directly executes the

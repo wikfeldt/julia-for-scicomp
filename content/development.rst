@@ -20,16 +20,18 @@ Developing in Julia
 Julia's package manager
 -----------------------
 
-Julia comes with an powerful inbuilt package manager. We can 
-also use the package manager to manage isolated environments 
-and dependencies.
+Julia comes with an powerful inbuilt package manager to install 
+and remove packages, manage dependencies and create isolated 
+software environments.
 
-- To enter the package manager from a Julia session we 
-  can hit the ``]`` character, after which the prompt 
-  changes to ```pkg>```. 
-- To see all available options, type `help`. For example, we can 
-  install a new package by ``pkg> add some-package``.
-- To go back to the REPL, hit backspace or ``^C``.
+.. type-along:: Entering the package manager
+   
+   - To enter the package manager from a Julia session we 
+     can hit the ``]`` character, after which the prompt 
+     changes to ```pkg>```. 
+   - To see all available options, type `help`. For example, we see that to 
+     install a new package we should type ``pkg> add some-package``.
+   - To go back to the REPL, hit backspace or ``^C``.
 
 .. callout:: Using the ``Pkg`` module
 
@@ -45,10 +47,49 @@ and dependencies.
 
 Let us get familiar with the package manager by working with an 
 example package that ships with Julia.
-To add the `Example` package
 
-Dependencies
+Environments
 ^^^^^^^^^^^^
+
+It is good practice to develop software in isolated environments.
+This enables us to use different versions of packages for different 
+projects and avoids dependency clashes. It is also the best way to 
+ensure `reproducibility` because the exact same software environment 
+can be easily created on different computers.
+
+We begin by creating a new environment:
+
+.. code-block:: julia
+
+   Pkg.activate("example-project")
+
+The output tells us that a new environment has been created in our 
+current directory - specifically using the ``Project.toml`` file.
+
+We now add the `Example` package by
+
+.. code-block:: julia
+
+   Pkg.add("Example")
+   Pkg.status()
+
+The status command shows the version of the Example package installed in 
+our new ``Project.toml`` file.  
+What does this file contain? Try printing it through the Julia shell by 
+typing ``;`` followed by ``cat example-project/Project.toml``.
+We can also see that there's another file in the ``example-project`` directory
+called ``Manifest.toml``. 
+
+.. callout:: ``Project.toml`` and ``Manifest.toml``
+   
+   ``Project.toml`` describes a project on a high level, including 
+   package dependencies and compatibilities, metadata such as `authors`,
+   `name`, `version` etc. It can be modified by hand. ``Manifest.toml`` 
+   is an absolute record of the state of packages in an environment and 
+   can be used to create identical Julia environments on different computers.
+   It should not be modified by hand.
+
+
 
 
 Creating a new project
