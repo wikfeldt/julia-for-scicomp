@@ -143,6 +143,11 @@ Let us play around in the REPL to get used to the workflow.
 
 
 
+Revise
+------
+
+
+
 Julia's package manager
 -----------------------
 
@@ -244,8 +249,29 @@ Adding tests
 **Should be installed in default environment, not in project**.
 VSCode imports it with the julia extension.
 
+.. exercise:: Creating a new environment
 
-  
+   In preparation for the next section on data science techniques in Julia, 
+   create a new environment named `datascience`, activate it and install 
+   the following packages:
+
+   - `DataFrames.jl <https://github.com/JuliaData/DataFrames.jl>`_
+   - `PalmerPenguins.jl <https://github.com/devmotion/PalmerPenguins.jl>`_
+   - `Plots.jl <https://github.com/JuliaPlots/Plots.jl>`_
+   - `StatsPlots.jl <https://github.com/JuliaPlots/StatsPlots.jl>`_
+   - `Makie.jl <https://github.com/JuliaPlots/Makie.jl>`_
+   - `Flux.jl <https://github.com/FluxML/Flux.jl>`_
+
+.. exercise:: Writing a test
+
+   Write a test for the ``sumsquare`` function in the `Points` module we wrote above!
+
+   - Create a new file `testPoints.jl` in the same directory as your `Points.jl` file.
+   - Include the module by ``include("Points.jl")`` and load it with ``using .Points`` 
+     (because the module is included in ``Main``).
+   - Write your tests using the ``@testset`` and ``@test`` macros. 
+   - Run the tests and see if they pass.
+
 See also
 --------
 
