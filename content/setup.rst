@@ -34,8 +34,17 @@ see something like in the image below.
 
 To exit the REPL again, hit ``CTRL-d`` or type ``exit()``.
 	   
-Installing JupyterLab and a Julia kernel
-----------------------------------------
+
+Installing Visual Studio Code
+-----------------------------
+
+
+Installing the VSCode Julia extension
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+(Optional) Installing JupyterLab and a Julia kernel
+---------------------------------------------------
 
 JupyterLab can most easily be installed through the full
 Anaconda distribution of Python packages or the minimal
@@ -53,7 +62,7 @@ activating a ``conda`` environment in your terminal, you can install
 JupyterLab with the command ``conda install jupyterlab``.
 
 Add Julia to JupyterLab
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 To be able to use a Julia kernel in a Jupyter notebook you need to
 install the ``IJulia`` Julia package. Open the Julia REPL and type::
@@ -62,7 +71,7 @@ install the ``IJulia`` Julia package. Open the Julia REPL and type::
   Pkg.add("IJulia")
 
 Create a Julia notebook
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Now you should be able to open up a JupyterLab session by typing
 ``jupyter-lab`` in a terminal, and create a Julia notebook by clicking
