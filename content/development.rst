@@ -73,7 +73,7 @@ The difference is how variables defined in the module are brought into scope:
 
    Let's create a toy module based on the code in the previous section:
 
-   .. code-block:: 
+   .. code-block:: julia
 
       module Points
  
@@ -195,7 +195,11 @@ We begin by creating a new environment:
    Pkg.activate("example-project")
 
 The output tells us that a new environment has been created in our 
-current directory - specifically using the ``Project.toml`` file.
+current directory - specifically using the ``Project.toml`` file 
+(don't look for it yet, it's only created after we start adding packages).
+
+Alternatively, one can first create the directory, then navigate to 
+that directory and type ``Pkg.activate(".")``.
 
 We now add the `Example` package by
 
@@ -210,16 +214,37 @@ What does this file contain? Try printing it through the Julia shell by
 typing ``;`` followed by ``cat example-project/Project.toml``.
 
 We can also see that there's another file in the ``example-project`` directory
-called ``Manifest.toml``...
+called ``Manifest.toml``.
 
 .. callout:: ``Project.toml`` and ``Manifest.toml``
    
-   ``Project.toml`` describes a project on a high level, including 
-   package dependencies and compatibilities, metadata such as `authors`,
-   `name`, `version` etc. It can be modified by hand. ``Manifest.toml`` 
-   is an absolute record of the state of packages in an environment and 
-   can be used to create identical Julia environments on different computers.
-   It should not be modified by hand.
+   - ``Project.toml`` describes a project on a high level, including 
+     package dependencies and compatibilities, metadata such as `authors`,
+     `name`, `version` etc. It can be modified by hand. 
+   - ``Manifest.toml`` 
+     is an absolute record of the state of packages in an environment and 
+     can be used to create identical Julia environments on different computers.
+     It should not be modified by hand.
+
+Creating environments for other projects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To create a new environment based on another project you only need a 
+`Project.toml` or `Manifest.toml` file. Using `Project.toml` will install 
+the required dependencies but not necessarily with the same package versions, 
+while using `Manifest.toml` will install the packages in the **same state** that 
+is given by the manifest file.
+
+For example:
+
+.. code-block:: julia
+
+   # first git clone the project (or similar) and enter the package directory
+   using Pkg
+   # activate the environment
+   Pkg.activate(".")
+   # install packages from Manifest.toml or Project.toml
+   Pkg.instantiate()
 
 
 
@@ -255,12 +280,13 @@ VSCode imports it with the julia extension.
    create a new environment named `datascience`, activate it and install 
    the following packages:
 
-   - `DataFrames.jl <https://github.com/JuliaData/DataFrames.jl>`_
-   - `PalmerPenguins.jl <https://github.com/devmotion/PalmerPenguins.jl>`_
-   - `Plots.jl <https://github.com/JuliaPlots/Plots.jl>`_
-   - `StatsPlots.jl <https://github.com/JuliaPlots/StatsPlots.jl>`_
-   - `Makie.jl <https://github.com/JuliaPlots/Makie.jl>`_
-   - `Flux.jl <https://github.com/FluxML/Flux.jl>`_
+   - `DataFrames <https://github.com/JuliaData/DataFrames.jl>`_
+   - `DataFramesMeta <https://github.com/JuliaData/DataFramesMeta.jl>`_
+   - `PalmerPenguins <https://github.com/devmotion/PalmerPenguins.jl>`_
+   - `Plots <https://github.com/JuliaPlots/Plots.jl>`_
+   - `StatsPlots <https://github.com/JuliaPlots/StatsPlots.jl>`_
+   - `Makie <https://github.com/JuliaPlots/Makie.jl>`_
+   - `Flux <https://github.com/FluxML/Flux.jl>`_
 
 .. exercise:: Writing a test
 
@@ -271,6 +297,28 @@ VSCode imports it with the julia extension.
      (because the module is included in ``Main``).
    - Write your tests using the ``@testset`` and ``@test`` macros. 
    - Run the tests and see if they pass.
+
+   .. solution::
+
+      .. code-block:: julia
+
+         using Test
+         using .Points
+         
+         @testset begin
+             # test floats
+             p1 = Point(1.0, 2.0)
+             p2 = Point(0.0, 3.0)
+             @test sumsquare(p1, p2) == Point(1.0, 13.0)
+             # test integers
+             q1 = Point(1, 2)
+             q2 = Point(0, 3)
+             @test sumsquare(q1, q2) == Point(1, 13)
+             # test that strings fail
+             s1 = Point("a", "b")
+             s2 = Point("c", "d")
+             @test_throws MethodError sumsquare(s1, s2) == Point(1, 13)    
+         end
 
 See also
 --------
