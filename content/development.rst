@@ -20,44 +20,127 @@ Developing in Julia
 Tooling
 -------
 
+We will now switch from the Julia REPL to 
+`Visual Studio Code (VSCode) <https://code.visualstudio.com/>`_.
+While VSCode with the `Julia extension <https://code.visualstudio.com/docs/languages/julia>`_ 
+is the prefered development environment for many Julia programmers, there 
+are some alternatives:
+
+- `Jupyter <https://jupyter.org/>`_:
+  Jupyter notebooks are familiar to many Python and R users. 
+- `Pluto.jl <https://github.com/fonsp/Pluto.jl>`_:
+  Offers a similar notebook experience to Jupyter, but
+  understands global references between cells, and
+  reactively re-evaluates cells affected by a code change.
+- A text editor like nano, emacs, vim, etc., followed by running your
+  code with ``julia filename.jl``. There are also plugins for Julia for 
+  major text editors - do an internet search on e.g. "emacs julia" or "vim julia"
+  to find out more.
+
+Using VSCode with the Julia extension
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After following the :doc:`setup` instructions to install VSCode and the Julia extension, 
+we can fire up a VSCode session and explore the functionality.
+
+.. type-along:: Exploring VSCode
+
+   - Open up VSCode
+   - 
+
+
 
 
 
 Structure of a Julia package
 ----------------------------
 
-Code written in Julia is normally encapsulated in modules which 
-in turn are made available as a package that can be included in other 
-projects. 
-All functions, variables and custom types can be put in one 
-(possibly large) module file with the same name as the module, 
-or (more commonly) into multiple files
-according to the functionality (``core.jl``, ``io.jl``, ``utilities.jl``, ...).
-In the latter case, there is still one file with the name of the module 
-where the other files are imported, and the module's API is defined by 
-exported functions and types.
+Modules
+^^^^^^^
 
-- Look at a good example module here
-
+Code written in Julia is normally encapsulated in modules. Modules 
+have their own global scope (namespace) separate from the global scope of 
+other modules (including ``Main``, the top-level module). 
 Modules are imported by either the ``using`` or ``import`` keywords.
-They work very similarly, the difference is how variables 
-defined in the module are brought into scope:
+The difference is how variables defined in the module are brought into scope:
 
 - With ``using ModuleName``, all `exported` names (variables and functions) in the 
-  module are brought into scope
+  module are brought into scope.
 - With ``import ModuleName``, the module's names need to be qualified, e.g. 
   ``ModuleName.func()`` or ``ModuleName.var1``.
 
-To concretize Let us put the code we wrote in the previous episode into a 
-module called `Points`, and then discuss the consequences of 
-doing so.
+.. type-along:: Creating a module
 
-.. code-block:: julia
+   Let's create a toy module based on the code in the previous section:
+
+   .. code-block:: 
+
+      module Points
+ 
+      export Point, sumsquare
+
+      struct Point{T}
+          x::T
+          y::T
+      end
+
+      function sumsquare(p1::Point, p2::Point)
+          return Point(p1.x^2 + p2.x^2, p1.y^2 + p2.y^2)
+      end
+
+      end
+
+   We can now import and use the module. Since our new module is defined within 
+   the current ``Main`` module, we need to import it with a dot in front.
+
+   .. code-block:: julia
+
+      using .Points
+      p1 = Point(0.0, 1.0)
+      p2 = Point(1.0, 2.0)
+      p3 = sumsquare(p1, p2)
+
+      # list all names exported from our module 
+      names(Points)
+
+Packages
+^^^^^^^^
+
+Julia packages contain one top-level module (submodules are allowed), 
+defined in a source file under ``src/`` with the same name as the 
+package itself.
+
+All functions, variables and custom types of a package can be put in one 
+(possibly large) module file, 
+or (more commonly) into multiple files
+according to the functionality (``core.jl``, ``io.jl``, ``utils.jl``, ...).
+
+.. type-along:: Inspecting a Julia package
+   
+   Let us have a look at representative Julia packages. Here are a few examples 
+   of Julia packages of a managable size:
+
+   - https://github.com/JuliaLang/Example.jl
+   - https://github.com/carstenbauer/MonteCarlo.jl
+   - https://github.com/aurelio-amerio/Mandelbrot.jl
+   - https://github.com/lucaferranti/MatrixPolynomials.jl
+   - https://github.com/FluxML/Trebuchet.jl
+   - https://github.com/wikfeldt/miniWeather.jl
+
+   Pay particular attention to the following aspects:
+
+   - The ``Project.toml`` and ``Manifest.toml`` files
+   - The ``test/`` subfolder if it exists
+   - Files in the ``src/`` subfolder
+   - The structure of the main module file and the other files under ``src/``
 
 
 
--  look at a largish Julia package
--  discuss scope and its rules
+
+Let us play around in the REPL to get used to the workflow.
+
+.. type-along:: Installing and using a package
+
 
 
 Julia's package manager
