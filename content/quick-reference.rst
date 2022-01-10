@@ -1,8 +1,12 @@
 Quick Reference
 ===============
 
-This page provides a quick overview of Julia's syntax and tooling.
-
+This page provides a quick overview of Julia's syntax and features.
+To prepare for a workshop where this material is taught, please 
+first install Julia as described in :doc:`setup`, and then go through 
+the overview below and experiment with it either in the Julia REPL, 
+a Jupyter or Pluto notebook, or in VSCode (refer to :doc:`setup` for 
+installation and configuration instructions).
 
 Running Julia
 -------------
