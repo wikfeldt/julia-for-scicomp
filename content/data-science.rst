@@ -151,6 +151,9 @@ We can inspect the data using a few basic operations:
    # find unique species
    unique(df.species)
 
+   # names of columns
+   names(df)
+
 
 Summary statistics can be displayed with the ``describe`` function:
 
@@ -182,12 +185,34 @@ What the first three features mean is illustrated in the picture below.
    Artwork by @allison_horst
 
 
+We can see in the output of ``describe`` that the element type of 
+all the columns is a union of ``missing`` and a numeric type. This
+implies that our dataset contains missing values.
 
-Let us now look at different ways to visualize this data.
+We can remove these by the ``dropmissing`` or ``dropmissing!`` functions
+(what is the difference between them?):
+
+.. code-block:: julia
+
+   dropmissing!(df)
+
+
+
+DataFramesMeta
+--------------
+
+The `DataFramesMeta.jl <https://juliadata.github.io/DataFramesMeta.jl/stable/>`_ package
+provides metaprogramming tools for DataFrames objects to provide more convenient syntax
+for various common tasks.
+
+- ``@subset``
+- ...
+
 
 Plotting
 --------
 
+Let us now look at different ways to visualize this data.
 Many different plotting libraries exist for Julia and which 
 one to use will depend on the specific use case as well as 
 personal preference. 
@@ -233,51 +258,53 @@ First we install `Plots.jl` and the `GR` backend:
    Pkg.add("GR")
 
 
-.. type-along:: Starting with the basics
+Here's how a simple line plot works:
 
-   Here's how a simple line plot works:
+.. code-block:: julia
 
-   .. code-block:: julia
+   using Plots 
+   gr()  # set the backend to GR
 
-      using Plots 
-      gr()  # set the backend to GR
+   x = 1:10; y = rand(10, 2) 
+   plot(x, y, title = "Two Lines", label = ["Line 1" "Line 2"], lw = 3) 
 
-      x = 1:10; y = rand(10, 2) 
-      plot(x, y, title = "Two Lines", label = ["Line 1" "Line 2"], lw = 3) 
+In VSCode, the plot should appear in a new plot pane.  
+We can add labels:
 
-   In VSCode, the plot should appear in a new plot pane.  
-   We can add labels:
+.. code-block:: julia
 
-   .. code-block:: julia
+   xlabel!("x label")
+   ylabel!("y label")
 
-      xlabel!("x label")
-      ylabel!("y label")
+To add a line to an existing plot, we mutate it with ``plot!``:
 
-   To add a line to an existing plot, we mutate it with ``plot!``:
+.. code-block:: julia
 
-   .. code-block:: julia
+   z = rand(10)
+   plot!(x, z)
 
-      z = rand(10)
-      plot!(x, z)
+Finally we can save to the plot to a file:
 
-   Finally we can save to the plot to a file:
+.. code-block:: julia
 
-   .. code-block:: julia
+   savefig("myplot.png")
 
-      savefig("myplot.png")
+Multiple subplots can be created by:
 
-   Multiple subplots can be created by:
+.. code-block:: julia
 
-   .. code-block:: julia
+   y = rand(10, 4)
 
-      y = rand(10, 4)
+   p1 = plot(x, y) # Make a line plot
+   p2 = scatter(x, y) # Make a scatter plot
+   p3 = plot(x, y, xlabel = "This one is labelled", lw = 3, title = "Subtitle")
+   p4 = histogram(x, y) # Four histograms each with 10 points? Why not!
+   plot(p1, p2, p3, p4, layout = (2, 2), legend = false)
 
-      p1 = plot(x, y) # Make a line plot
-      p2 = scatter(x, y) # Make a scatter plot
-      p3 = plot(x, y, xlabel = "This one is labelled", lw = 3, title = "Subtitle")
-      p4 = histogram(x, y) # Four histograms each with 10 points? Why not!
-      plot(p1, p2, p3, p4, layout = (2, 2), legend = false)
 
+.. type-along:: Visualizing the Penguin dataset
+
+   
 
 Flux.jl
 -------
@@ -300,6 +327,14 @@ To train a model we need four things:
 - An optimiser that will update the model parameters appropriately.
 
 
+.. exercise::
+
+   Start from the neural network we trained to identify penguins, and try adding 
+   the following layers one by one and see if the predictive ability improves:
+
+   - dense layer
+   - ...
+  
 
 See also
 --------

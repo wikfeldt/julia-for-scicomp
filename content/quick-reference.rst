@@ -120,6 +120,7 @@ Basic syntax
 +------------------+------------------------------------+---------------------------------+
 | Miscellanous     | - ``δ = 0.1``  (type \delta <TAB>) | - Unicode names with LaTeX      |
 |                  | - ``println("A = $A")``            | - Print using interpolation     |
+|                  | - ``:something``                   | - Symbol for a name or label    |
 +------------------+------------------------------------+---------------------------------+
 
 
@@ -312,6 +313,22 @@ Julia functions can be piped (chained) together:
 
 	  1:10 |> sum |> sqrt    # 7.416198487095663 (first summed, then square root)
 
+The table below lists a few useful functions in Julia's base library and briefly 
+explains their purpose.
+
++----------------------+---------------------------------------------------------------+
+| Function             |  What it does                                                 |
++======================+===============================================================+
+| ``dump()``            |                    |
+| ``collect()``          |                             |
+| ``zip()``             |                  |
+|                   |                  |
+|         |                               |
+|         |                               |
+|         |                               |
+|         |                               |
++------------------+------------------------------------------------------------+
+
 	  
 	 
 Exception handling
@@ -363,6 +380,55 @@ Exceptions can be created explicitly with `throw`:
 	  end
 
 	  
+Macros
+------
+
+The `metaprogramming support in Julia <https://docs.julialang.org/en/v1/manual/metaprogramming/>`_ 
+allows code to be automatically transformed and generated. A full treatment of metaprogramming 
+is outside the scope of this lesson but familiarity with macros, which are made possible by 
+metaprogramming, is highly useful and will be covered in the lesson. 
+Macros provide a mechanism to include generated code in the final body of a program.
+To give only one simple example, a new macro can be created by:
+
+.. code-block:: julia
+	
+	macro sayhello(name)
+		return :( println("Hello, ", $name) )
+	end
+
+and called by:
+
+.. code-block:: julia
+
+	@sayhello "world!"
+
+The table below contains a list of useful macros and a short explanation of their function. 
+Many are available in ``Base``, i.e. the base library of Julia. Others are implemented in 
+other packages and thus need those packages to be loaded.
+
++----------------------+-----------------|-----------------------------------------------------------+
+| Macro                | From package    | What it does                                              |
++======================+=================|===========================================================+
+| ``@time``            | ``Base``        | Prints time it takes to execute statement                  |
+| ``@show``            | Show an expression and result                              |
+| ``Threads.@threads`` |                               |                              |
+| ``@everywhere``      |                               |                              |
+|         |                               |                              |
+|         |                               |                              |
+|         |                               |                              |
+|         |                               |                              |
++------------------+----------------------+-------------------------------------+
+
+
+
+
+
+
+
+Scope
+-----
+
+WRITEME
 
 Style conventions
 -----------------

@@ -21,7 +21,8 @@ Section
 - High-level libraries like ArrayFire.jl and GPUArrays.jl
 - https://github.com/JuliaGPU/AMDGPU.jl
 - https://github.com/JuliaGPU  
-
+- https://github.com/JuliaGPU/ArrayFire.jl
+- 
 See also
 --------
 
