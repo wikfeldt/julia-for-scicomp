@@ -97,8 +97,52 @@ The lesson material is licensed under `CC-BY-4.0
 Instructors who wish to teach this lesson can refer to the :doc:`guide` for
 practical advice.
 
+Graphical and text conventions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Different graphical elements are used to organize the material.
 
+Type-along sections
+~~~~~~~~~~~~~~~~~~~
+
+Type-along sections are intended for live coding where all participants 
+type-along and appear in a separate text box, marked with a keyboard emoji:
+
+.. type-along:: Defining a variables
+
+  This is how you set a variable in Julia:
+
+  .. code-block:: julia
+
+    x = 1
+
+Exercises
+~~~~~~~~~
+
+All lesson episodes (sections) end with one or more exercises for participants 
+to practice what they've learned, marked with a hand-writing emoji. Sometimes 
+there's also a solution:
+
+.. exercise:: Printing to screen
+
+  Which of these commands prints the value of the variable ``x``?
+
+  1. ``print(x)``
+  2. ``println(x)``
+  3. ``write(x)``
+
+  .. solution::
+
+    Correct answer is both 1 and 2! ``println()`` uses ``print()`` and adds a new line.
+
+Important information
+~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes important information is displayed inside boxes with an exclamation mark emoji:
+
+.. callout:: Important info
+
+  Please don't hesitate to ask questions during the workshop!
 
 
 
@@ -106,9 +150,9 @@ See also
 --------
 
 Excellent resources for learning Julia can be found
-in the following pages::
+in the following pages:
 
-  - https://github.com/csc-training/julia-introduction/
+- https://github.com/csc-training/julia-introduction/
 
 
 
@@ -123,6 +167,7 @@ most of their license text.
 
 Several examples and formulations are inspired by and derived from other Julia
 lessons, particularly:
+
 - `Carsten Bauer's 3-day Julia workshop <https://github.com/carstenbauer/JuliaCologne21>`_
 - `The Carpentry lesson Introduction to Julia <https://carpentries-incubator.github.io/julia-novice/>`_
 - `Storopoli, Huijzer and Alonso (2021). Julia Data Science. ISBN: 9798489859165. <https://juliadatascience.io>`_
