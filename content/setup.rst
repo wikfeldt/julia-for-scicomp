@@ -1,15 +1,6 @@
 Setup
 =====
 
-Open a terminal
----------------
-
-To run Julia as a command line program you will need a terminal.
-Both MacOS and Linux have inbuilt terminal programs. It doesn't matter
-whether it's set up to use ``bash``, ``zsh`` or any other shell.
-
-For Windows users who do not already have a terminal installed,
-we recommend to install the `Windows Terminal from the Microsoft Store <https://www.microsoft.com/sv-se/p/windows-terminal/9n0dx20hk701?rtc=1&activetab=pivot:overviewtab>`_.
 
 Installing Julia
 ----------------
@@ -22,12 +13,19 @@ First download the latest stable release of Julia for your operating system
 
 Follow the instructions to complete the installation.
 
-Also make sure to add Julia to your PATH by following the instructions at
-https://julialang.org/downloads/platform/.
+Platform-specific instructions can be found at 
+https://julialang.org/downloads/platform/. It is convenient to be able 
+to run Julia from the command line, so follow the instructions for 
+"adding Julia to PATH".  
+For Windows users who do not already have a terminal installed,
+we recommend to install the 
+`Windows Terminal from the Microsoft Store <https://www.microsoft.com/sv-se/p/windows-terminal/9n0dx20hk701?rtc=1&activetab=pivot:overviewtab>`_.
+
 
 After these steps, please ensure that you can open the Julia REPL by
-typing ``julia`` on the command line in a terminal. You will hopefully
-see something like in the image below.
+typing ``julia`` on the command line in a terminal, or by clicking the Julia 
+icon on your Desktop or Applications folder. You should
+see something like in the image below (nevermind the version number).
 
 .. figure:: img/repl.png
    :align: center
@@ -38,10 +36,39 @@ To exit the REPL again, hit ``CTRL-d`` or type ``exit()``.
 Installing Visual Studio Code
 -----------------------------
 
+https://code.visualstudio.com/Download
 
 Installing the VSCode Julia extension
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Click the Extensions button on the left-side menu, type `Julia` and 
+click `Install` to install the Julia extension.
+
+.. figure:: img/vscode_extensionbutton.png
+   :align: center
+   :scale: 50 %
+
+.. figure:: img/vscode_juliaextension.png
+   :align: center
+   :scale: 50 %
+
+You now need to configure the Julia extension and set the path 
+to the Julia executable. Click the cogwheel button next to the Julia 
+extension:
+
+.. figure:: img/vscode_extensionconfig.png
+   :align: center
+   :scale: 50 %
+
+Then find the "Julia: Executable Path" field:
+
+.. figure:: img/vscode_execpath.png
+   :align: center
+   :scale: 50 %
+
+In this field enter the path to the Julia executable that you have installed.
+
+If you are curious, scroll through the other possible configuration settings!
 
 (Optional) Installing JupyterLab and a Julia kernel
 ---------------------------------------------------
