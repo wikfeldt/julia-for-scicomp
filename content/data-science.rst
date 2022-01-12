@@ -329,16 +329,46 @@ Multiple subplots can be created by:
                      )
 
 
-Flux.jl
--------
+Machine learning in Julia
+-------------------------
 
-- Flux's core feature is taking gradients of Julia code
-- The gradient function takes another Julia function f and a set of
-  arguments, and returns the gradient with respect to each argument.
+Despite being a relatively new language, Julia already has a strong and rapidly expanding 
+ecosystem of libraries for machine learning and deep learning. A fundamental advantage of Julia for ML 
+that it solves the two-language problem - there is no need for different languages for the 
+user-facing framework and the backend heavy-lifting (like for most other DL frameworks).
+
+A particular focus in the Julia approach to ML is `"scientific machine learning" (SciML) <https://sciml.ai/>`_ 
+(a.k.a. physics-informed learning), i.e. machine learning which incorporates scientific models into 
+the learning process instead of relying only on data. The core principle of SciML is `differentiable 
+programming` - the ability to automatically differentiate any code and thus incorporate it into 
+Flux models.
+
+However, Julia is still behind frameworks like PyTorch and Tensorflow/Keras in terms of documentation and API design.
+
+Traditional machine learning
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Julia has packages for traditional (non-deep) machine learning:
+
+- `ScikitLearn.jl <https://scikitlearnjl.readthedocs.io/en/latest/>`_ is a port of the popular Python package.
+- `MLJ.jl <https://alan-turing-institute.github.io/MLJ.jl/dev/>`_ provides a common interface 
+  and meta-algorithms for selecting, tuning, evaluating, composing and comparing over 150 machine learning models.
+
+
+Flux.jl
+^^^^^^^
+
+Flux comes "batteries-included" with many useful tools built in, but also enables the user to 
+write own Julia code for DL components.
+
+- Flux has relatively few explicit APIs for features like regularisation or embeddings. 
+- All of Flux is straightforward Julia code and. It can be worth to inspect it build own parts if needed.
+- Flux works well with other Julia libraries, like dataframes, images and differential equation solvers.
+  One can build complex data processing pipelines that integrate Flux models.
 
 
 Training a model
-^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~
 
 To train a model we need four things:
 
@@ -349,6 +379,11 @@ To train a model we need four things:
   function.
 - An optimiser that will update the model parameters appropriately.
 
+
+
+
+Exercises
+---------
 
 .. exercise:: Create a custom plotting function
 
@@ -390,4 +425,5 @@ See also
       # load a couple of datasets
       iris = dataset("datasets", "iris")
       neuro = dataset("boot", "neuro")
-     
+
+- `"The Future of Machine Learning and why it looks a lot like Julia" by Logan Kilpatrick <https://towardsdatascience.com/the-future-of-machine-learning-and-why-it-looks-a-lot-like-julia-a0e26b51f6a6>_

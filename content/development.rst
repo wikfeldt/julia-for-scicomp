@@ -274,6 +274,11 @@ Adding tests
 **Should be installed in default environment, not in project**.
 VSCode imports it with the julia extension.
 
+
+
+Exercises
+---------
+
 .. exercise:: Creating a new environment
 
    In preparation for the next section on data science techniques in Julia, 
@@ -281,11 +286,8 @@ VSCode imports it with the julia extension.
    the following packages:
 
    - `DataFrames <https://github.com/JuliaData/DataFrames.jl>`_
-   - `DataFramesMeta <https://github.com/JuliaData/DataFramesMeta.jl>`_
    - `PalmerPenguins <https://github.com/devmotion/PalmerPenguins.jl>`_
    - `Plots <https://github.com/JuliaPlots/Plots.jl>`_
-   - `StatsPlots <https://github.com/JuliaPlots/StatsPlots.jl>`_
-   - `Makie <https://github.com/JuliaPlots/Makie.jl>`_
    - `Flux <https://github.com/FluxML/Flux.jl>`_
 
 .. exercise:: Writing a test
