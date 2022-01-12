@@ -41,22 +41,7 @@ To obtain the data we simply add the PalmerPenguins package.
    Pkg.add("PalmerPenguins")
    using PalmerPenguins
 
-.. callout:: Accessing a library of datasets
 
-   The R language (and many of its add-on packages)
-   ships with a large number of datasets useful 
-   for teaching and statistical software development. These 
-   datasets are available in Julia through the 
-   `RDatasets <https://github.com/JuliaStats/RDatasets.jl>`_ 
-   package:
-
-   .. code-block:: julia
-
-      Pkg.add("RDatasets")
-      using RDatasets
-      # load a couple of datasets
-      iris = dataset("datasets", "iris")
-      neuro = dataset("boot", "neuro")
 
 Dataframes
 ----------
@@ -198,17 +183,6 @@ We can remove these by the ``dropmissing`` or ``dropmissing!`` functions
 
 
 
-DataFramesMeta
---------------
-
-The `DataFramesMeta.jl <https://juliadata.github.io/DataFramesMeta.jl/stable/>`_ package
-provides metaprogramming tools for DataFrames objects to provide more convenient syntax
-for various common tasks.
-
-- ``@subset``
-- ...
-
-
 Plotting
 --------
 
@@ -221,41 +195,30 @@ personal preference.
       
    - `Plots.jl <http://docs.juliaplots.org/latest/>`_: high-level 
      API for working with several different plotting back-ends, including `GR`, 
-     `Matplotlib.Pyplot`, `Plotly` and `PlotlyJS`
-   
-      - reliable and simple
-      - large JIT precompilation time
-   
+     `Matplotlib.Pyplot`, `Plotly` and `PlotlyJS`.
+   - `StatsPlots.jl <https://github.com/JuliaPlots/StatsPlots.jl>`_: was moved 
+     out from core `Plots.jl`. Focuses on statistical use-cases and supports 
+     specialized statistical plotting functionalities.
    - `GadFly.jl <http://gadflyjl.org/stable/>`_: based largely on 
      `ggplot2 for R <https://ggplot2.tidyverse.org/>`_ and the book 
      `The Grammar of Graphics <https://www.cs.uic.edu/~wilkinson/TheGrammarOfGraphics/GOG.html>`_.
-   
-      - pure Julia, precompiles fast
-      - interactive with Javascript integration
-      - not the most diverse
-   
+     Well suited for statistics and machine learning.
    - `VegaLite.jl <https://www.queryverse.org/VegaLite.jl/stable/>`_: based on 
-     `Vega-Lite <https://vega.github.io/vega-lite/>`_, a grammar of interactive graphics
-   
-      - like Julia's version of Pythons Seaborn library
-      - lacks interactivity
-   
+     `Vega-Lite <https://vega.github.io/vega-lite/>`_, a grammar of interactive graphics. 
+     Great for interactive graphics.
    - `Makie.jl <https://makie.juliaplots.org/stable/>`_ data visualization ecosystem with backends 
-     `GLMakie.jl` (OpenCL), `CairoMakie.jl` (Cairo) and `WGLMakie.jl` (WebGL)
-   
-      - pure Julia, high-performance and extendable
-      - somewhat less mature
-   
-We will first create a few graphs using `Plots.jl` and its extension
-`StatsPlots.jl` and then 
-move on to using `Makie.jl` for visualizing the Penguins dataset.
+     `GLMakie.jl` (OpenCL), `CairoMakie.jl` (Cairo) and `WGLMakie.jl` (WebGL). 
+     Good for publication-quality plotting but can be a bit slow to load and use.
 
-First we install `Plots.jl` and the `GR` backend:
+We will be using `Plots.jl` and `StatsPlots.jl` but we encourage to explore these 
+other packages to find the one that best fits your use case.
+
+First we install `Plots.jl` and `StatsPlots` backend:
 
 .. code-block:: julia
 
    Pkg.add("Plots")
-   Pkg.add("GR")
+   Pkg.add("StatsPlots")   
 
 
 Here's how a simple line plot works:
@@ -304,7 +267,67 @@ Multiple subplots can be created by:
 
 .. type-along:: Visualizing the Penguin dataset
 
-   
+   First we make sure to have the packages installed and set the backend to GR:
+
+   .. code-block::
+
+      using Pkg
+      Pkg.add("Plots")
+      Pkg.add("StatsPlots")
+      gr()
+
+   For the Penguin dataset it is more appropriate to use scatter plots, for example:
+
+   .. code-block:: julia
+
+      scatter(df[!, :bill_length_mm], df[!, :bill_depth_mm])
+
+   We can adjust the markers by `this list of named colors <https://juliagraphics.github.io/Colors.jl/stable/namedcolors/>`_
+   and `this list of marker types <https://docs.juliaplots.org/latest/generated/unicodeplots/#unicodeplots-ref13>`_:
+
+   .. code-block:: julia
+
+      scatter(df[!, :bill_length_mm], df[!, :bill_depth_mm], marker = :hexagon, color = :magenta)
+
+   We can also change the plot theme according to `this list of themes <https://docs.juliaplots.org/latest/generated/plotthemes/>`_, 
+   for example:
+
+   .. code-block::
+
+      theme(:dark)
+      # then re-execute the scatter function
+
+   We can add a dimension to the plot by grouping by another column. Let's see if 
+   the different penguin species can be distiguished based on their bill length 
+   and bill depth. We also set different marker shapes and colors based on the 
+   grouping, and adjust the markersize and transparency (``alpha``):
+
+   .. code-block:: julia
+
+      scatter(df[!, :bill_length_mm],
+              df[!, :bill_depth_mm], 
+              xlabel = "bill length (mm)",
+              ylabel = "bill depth (g)",
+              group = df[!, :species],
+              marker = [:circle :ltriangle :star5],
+              color = [:magenta :springgreen :yellow],
+              markersize = 5,
+              alpha = 0.8
+              )
+
+   The ``scatter`` function comes from the base `Plots` package. `StatsPlots` provides
+   many other types of plot types, for example ``density``. To use dataframes with `StatsPlots`
+   we need to use the ``@df`` macro which allows passing columns as symbols (this can also be used 
+   for ``scatter`` and other plot functions):
+
+   .. code-block:: julia
+
+      @df df density(:flipper_length_mm,
+                     xlabel = "flipper length (mm)",
+                     group = :species,
+                     color = [:magenta :springgreen :yellow],
+                     )
+
 
 Flux.jl
 -------
@@ -327,6 +350,22 @@ To train a model we need four things:
 - An optimiser that will update the model parameters appropriately.
 
 
+.. exercise:: Create a custom plotting function
+
+   Convert the final ``scatter`` plot in the type-along section "Visualizing the Penguin dataset"
+   and convert it into a ``create_scatterplot`` function: 
+   
+   - The function should take as arguments a dataframe and two column symbols. 
+   - Use the ``minimum()`` and ``maximum()`` functions to automatically set the x-range of the plot 
+     using the ``xlim = (xmin, xmax)`` argument to ``scatter()``.
+   - If you have time, try grouping the data by ``:island`` or ``:sex`` instead of ``:species`` 
+     (keep in mind that you may need to adjust the number of marker symbols and colors).
+   - If you have more time, play around with the plot appearance using ``theme()`` and the marker symbols and colors.
+
+   .. solution::
+
+      WRITEME
+
 .. exercise::
 
    Start from the neural network we trained to identify penguins, and try adding 
@@ -340,5 +379,15 @@ See also
 --------
 
 - `Best Julia Data Manipulation packages combo 2020-09 <https://www.youtube.com/watch?v=q_P2H_ZXVxI>`__
+-  Many interesting datasets are available in Julia through the 
+   `RDatasets <https://github.com/JuliaStats/RDatasets.jl>`_ package.
+   For instance:
 
+   .. code-block:: julia
+
+      Pkg.add("RDatasets")
+      using RDatasets
+      # load a couple of datasets
+      iris = dataset("datasets", "iris")
+      neuro = dataset("boot", "neuro")
      
