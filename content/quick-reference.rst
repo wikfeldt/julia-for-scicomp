@@ -8,6 +8,10 @@ the overview below and experiment with it either in the Julia REPL,
 a Jupyter or Pluto notebook, or in VSCode (refer to :doc:`setup` for 
 installation and configuration instructions).
 
+As an alternative to going through this page, you can also watch 
+`this video <https://www.youtube.com/watch?v=sE67bP2PnOo&t=28s>`_ 
+which covers "a 300 page book on Julia in one hour".
+
 Running Julia
 -------------
 
