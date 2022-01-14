@@ -15,7 +15,7 @@ Multi-threading
 Introducing Heatequation
 ------------------------
 
-We will need a realistic Julia package to work on for all remaining exercises.
+We will need a realistic Julia package to work on from now on.
 For this purpose we will use a minimal heat equation solver, inspired by 
 `this educational repository containing C/C++ versions with different 
 parallelization strategies <https://github.com/cschpc/heat-equation>`_ (credits to 
@@ -25,29 +25,29 @@ below.
 
 .. tabs:: 
 
-   .. tab:: Heatequation.jl
+   .. tab:: HeatEquation.jl
 
-      .. literalinclude:: code/Heatequation/src/Heatequation.jl
+      .. literalinclude:: code/Heatequation/src/HeatEquation.jl
          :language: julia
 
    .. tab:: setup.jl
 
-      .. literalinclude:: code/Heatequation/src/setup.jl
+      .. literalinclude:: code/HeatEquation/src/setup.jl
          :language: julia
 
    .. tab:: io.jl
 
-      .. literalinclude:: code/Heatequation/src/io.jl
+      .. literalinclude:: code/HeatEquation/src/io.jl
          :language: julia
 
    .. tab:: core.jl
 
-      .. literalinclude:: code/Heatequation/src/core.jl
+      .. literalinclude:: code/HeatEquation/src/core.jl
          :language: julia
 
    .. tab:: Project.toml
 
-      .. literalinclude:: code/Heatequation/Project.toml
+      .. literalinclude:: code/HeatEquation/Project.toml
          :language: julia         
 
 
@@ -69,67 +69,246 @@ As with `Revise.jl` and `Test.jl`, `BenchmarkTools.jl` should be installed in th
    Pkg.activate()
    Pkg.add("BenchmarkTools")
 
-Let us try it out on the Heatequation package in the REPL. 
+Let us all try it out on the HeatEquation package in the REPL. 
 We could use the ``Pkg.develop()`` function to clone the repository 
 into our `~/.julia/dev` folder, which is a good way to work on existing 
 Julia packages. Here, we instead imagine that we wrote this package and it 
 exists on our computer, so we start by cloning the repository (or download and 
 unpack a zip archive) to a new folder:
 
-.. code-block:: shell
+.. type-along:: Benchmarking
 
-   cd $HOME/julia
-   git clone https://github.com/wikfeldt/Heatequation.jl
-   cd Heatequation
+   .. code-block:: shell
 
-Next open a new VSCode window and navigate to the new directory. 
-Open up a Julia REPL and activate the `HeatEquation` environment.
+      cd $HOME/julia
+      git clone https://github.com/enccs/HeatEquation.jl
+      cd HeatEquation
 
-When everything has been set up, we can import `HeatEquation` and start 
-benchmarking. We should also not forget to import `Revise`!
+   Next open a new VSCode window and navigate to the new directory. 
+   Open up a Julia REPL and activate the `HeatEquation` environment.
 
-.. code-block:: julia
+   When everything has been set up, we can import `HeatEquation` and start 
+   benchmarking. We should also not forget to import `Revise`!
 
-   using HeatEquation
-   using Revise
-   using BenchmarkTools
+   .. code-block:: julia
 
-   @benchmark simulate(1000, 1000, 500)
+      using HeatEquation
+      using Revise
+      using BenchmarkTools
 
-We can also capture the output of ``@benchmark``:
+      ncols, nrows, nsteps = 1000, 1000, 500
+      curr, prev = initialize(ncols, nrows)
 
-.. code-block:: julia
+      @benchmark simulate!(curr, prev, nsteps)
 
-   bench_results = @benchmark simulate(1000, 1000, 500)
-   typeof(bench_results)
-   println(minimum(bench_results.times))
+   We can also capture the output of ``@benchmark``:
+
+   .. code-block:: julia
+
+      bench_results = @benchmark simulate!(curr, prev, nsteps)
+      typeof(bench_results)
+      println(minimum(bench_results.times))
 
 
 Profiling
 ---------
 
-.. code-block:: julia
+The `Profile module <https://docs.julialang.org/en/v1/manual/profile/>`_, part of ``Base``, 
+provides tools to help improve 
+the performance of Julia code. It relies on `sampling` code at runtime 
+and thus gathering statistical information on where time is spent. 
+Profiling is particularly useful for identifying bottlenecks in code - 
+we should remember that "premature optimization is the root of all evil" (Donald Knuth).
 
-   using Profile
-   Profile.clear()
+Let's go ahead and profile the `HeatEquation` code:
 
-   @profile simulate(1000, 1000, 500)
-   Profile.print(maxdepth=15)
+.. type-along:: Profiling
+
+   This is how we can profile the ``simulate!`` function and 
+   print its results in a tree structure:
+
+   .. code-block:: julia
+
+      using Profile
+
+      Profile.clear() # clear backtraces from earlier runs
+      curr, prev = initialize(1000, 1000)
+      @profile simulate!(curr, prev, 500)
+      Profile.print()
+
+   The information shown is not that easily digestible. Fortunately, the Julia extension 
+   for VSCode includes a ``@profview`` macro which provides a clearer graphical view:
+
+   .. code-block:: julia
+
+      @profview simulate!(curr, prev, 500)
+
+   We can also look at the same information in a flamegraph by clicking the little fire 
+   button next to the search area. 
+   We should now be able to conclude that ``setindex!`` and ``getindex`` functions 
+   inside ``evolve!`` take most of the time.
+
+Several packages are available for more advanced visualization of profiling results:
+
+- `ProfileView.jl <https://github.com/timholy/ProfileView.jl>`_ is a stand-alone visualizer 
+  based on GTK.
+- `ProfileVega.jl <https://github.com/davidanthoff/ProfileVega.jl>`_ 
+  uses VegaLight and integrates well with Jupyter notebooks.
+- `StatProfilerHTML.jl <https://github.com/tkluck/StatProfilerHTML.jl>`_ 
+  produces HTML and presents some additional summaries, 
+  and also integrates well with Jupyter notebooks.
+- `PProf.jl <https://github.com/JuliaPerf/PProf.jl>` an interactive, web-based profile 
+  GUI explorer, implemented as a wrapper around google/pprof. 
+
+
 
 Optimization options
 --------------------
 
+Column-major vs row-major order
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Multidimensional arrays in Julia are stored in column-major order, i.e. 
+arrays are stacked one column at a time in memory. This is the same order 
+as in Fortran, Matlab and R, but opposite to that of C/C++ and Python (numpy). 
+To avoid cache-misses it is  crucial to order one's loops such that memory is 
+accessed in a contiguous way!
+
+We can verify this by swapping the loop order in the ``evolve!`` function and 
+measure the performance:
+
+.. code-block:: julia
+
+   function evolve!(curr::Field, prev::Field, a, dt)
+       for i = 2:curr.nx+1
+           for j = 2:curr.ny+1
+               xderiv = (prev.data[i-1, j] - 2.0 * prev.data[i, j] + prev.data[i+1, j]) / curr.dx^2
+               yderiv = (prev.data[i, j-1] - 2.0 * prev.data[i, j] + prev.data[i, j+1]) / curr.dy^2
+               curr.data[i, j] = prev.data[i, j] + a * dt * (xderiv + yderiv)
+         end 
+      end
+   end
+
+.. code-block:: julia
+
+   curr, prev = initialize(1000, 1000)
+   @benchmark simulate!(curr, prev, 500)
+
+In a set of tests this more than doubled the execution time!   
+
 @inbounds
 ^^^^^^^^^
 
-@simd
-^^^^^
+The ``@inbounds`` macro eliminates array bounds checking within expressions which 
+can save considerable time. This should only be used if you are sure that no out-of-bounds 
+indices are used!
+
+Let us add ``@inbounds`` to the three lines in the inner loop in ``evolve!`` 
+and benchmark it:
+
+.. code-block:: julia
+
+   for j = 2:curr.ny+1
+       for i = 2:curr.nx+1
+           @inbounds xderiv = (prev.data[i-1, j] - 2.0 * prev.data[i, j] + prev.data[i+1, j]) / curr.dx^2
+           @inbounds yderiv = (prev.data[i, j-1] - 2.0 * prev.data[i, j] + prev.data[i, j+1]) / curr.dy^2
+           @inbounds curr.data[i, j] = prev.data[i, j] + a * dt * (xderiv + yderiv)
+       end 
+    end
+
+.. code-block:: julia
+
+   curr, prev = initialize(1000, 1000)
+   @benchmark simulate!(curr, prev, 500)
+
+Significant speedup should be seen! In a set of tests the execution time as  
+well as memory consumption were reduced by 50\%.
+
+
+StaticArrays
+^^^^^^^^^^^^
+
+WRITEME?
+
+
+Other performance considerations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Julia's official documentation has an important page on 
+`Performance tips <https://docs.julialang.org/en/v1/manual/performance-tips/>`_.
+Before embarking on any research software project in Julia you 
+should carefully read this page!
+
+Threading
+---------
+
+We will now finally walk through how to use multithreading in Julia. 
+In the VSCode REPL, let's see how many threads we have access to:
+
+.. code-block:: julia
+
+   Threads.nthreads()
+
+Hmm, but we need more than one thread to be able to gain any performance 
+from multithreading. 
+
+Julia can be started with a given number of threads in two ways:
+
+.. code-block:: bash
+
+   julia -t 4
+   # or (can also set the env-var in e.g. .bashrc)
+   JULIA_NUM_THREADS = 4 julia
+
+This is not possible to do inside VSCode. Instead, we open up the 
+"Extension Settings" for the Julia VSCode extension and set the 
+"Julia: Num Threads" setting to the number of CPU cores we have on 
+our machines (if you're unsure, just try setting it to 2).
+We can make sure we have access to the correct number of threads 
+with the ``Threads.nthreads()`` function.
+
+The main multithreading approach is to use the ``Threads.@threads`` macro 
+which parallelizes a `for` loop to run with multiple threads:
+
+.. code-block:: julia
+
+   a = zeros(10)
+   Threads.@threads for i = 1:10
+       a[i] = Threads.threadid()
+   end
+   println(a)
 
 
 
+It only works on outermost loops, 
+
+
+.. exercise:: Multithreading HeatEquation.jl
+
+   Consider the double for loop in the ``evolve!`` function. 
+   Can it safely be threaded, i.e. is there any risk of race 
+   conditions?
+
+   - Insert the ``Threads.@threads`` macro in the right location.
+   - Measure its effects with ``@benchmark``.
+     Since it's cumbersome to change the "Julia: Num Threads" option 
+     in VSCode and relaunch the Julia REPL over and over, use the 
+     `example.jl` script instead: comment out the visualization and 
+     insert something like:
+
+     .. code-block:: julia
+
+        bench_results = @benchmark simulate!(curr, prev, nsteps)
+        println(minimum(bench_results.times))
+
+   - Now run with different number of threads from a terminal using 
+     ``julia --project=. -t N example.jl`` and observe the scaling.
+   - Try increasing the problem size (e.g. ``nx=ny=10_000``) while lowering the 
+     number of time steps (e.g. ``nsteps = 20``). Does it scale better?
 
 See also
 --------
 
 - https://docs.julialang.org/en/v1/manual/multi-threading/
 - https://julialang.org/blog/2019/07/multithreading/
+- https://docs.julialang.org/en/v1/manual/performance-tips/
