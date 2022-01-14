@@ -88,14 +88,43 @@ Open up a Julia REPL and activate the `HeatEquation` environment.
 When everything has been set up, we can import `HeatEquation` and start 
 benchmarking. We should also not forget to import `Revise`!
 
-.. code-block::
+.. code-block:: julia
 
    using HeatEquation
    using Revise
+   using BenchmarkTools
 
    @benchmark simulate(1000, 1000, 500)
 
-.. code-block::
+We can also capture the output of ``@benchmark``:
+
+.. code-block:: julia
+
+   bench_results = @benchmark simulate(1000, 1000, 500)
+   typeof(bench_results)
+   println(minimum(bench_results.times))
+
+
+Profiling
+---------
+
+.. code-block:: julia
+
+   using Profile
+   Profile.clear()
+
+   @profile simulate(1000, 1000, 500)
+   Profile.print(maxdepth=15)
+
+Optimization options
+--------------------
+
+@inbounds
+^^^^^^^^^
+
+@simd
+^^^^^
+
 
 
 
