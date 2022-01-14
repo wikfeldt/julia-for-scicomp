@@ -79,17 +79,14 @@ Some advantages of Julia:
 
 
 The two-language problem
-
 ------------------------
 
 
 Benchmarks
-
 ----------
 
 
 Composability
-
 -------------
 
 

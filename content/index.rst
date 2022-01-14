@@ -36,9 +36,8 @@ computing.
    20 min ; :doc:`development`
    20 min ; :doc:`data-science`   
    20 min ; :doc:`performant-code`
-   20 min ; :doc:`threading`
+   20 min ; :doc:`parallelization`
    20 min ; :doc:`GPU`         
-   20 min ; :doc:`distributed`
    
 .. toctree::
    :hidden:
@@ -50,9 +49,8 @@ computing.
    development
    data-science   
    performant-code
-   threading
+   parallelization
    GPU
-   distributed
 
 .. toctree::
    :maxdepth: 1

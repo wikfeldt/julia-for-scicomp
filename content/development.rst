@@ -46,9 +46,7 @@ we can fire up a VSCode session and explore the functionality.
 .. type-along:: Exploring VSCode
 
    - Open up VSCode
-   - 
-
-
+   - WRITEME
 
 
 
@@ -141,12 +139,12 @@ Let us play around in the REPL to get used to the workflow.
 
 .. type-along:: Installing and using a package
 
-
+   WRITEME
 
 Revise
 ------
 
-
+WRITEME
 
 Julia's package manager
 -----------------------

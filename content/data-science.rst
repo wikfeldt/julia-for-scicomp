@@ -385,6 +385,7 @@ To train a model we need four things:
 Exercises
 ---------
 
+
 .. exercise:: Create a custom plotting function
 
    Convert the final ``scatter`` plot in the type-along section "Visualizing the Penguin dataset"
