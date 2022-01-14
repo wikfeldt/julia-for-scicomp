@@ -104,6 +104,7 @@ Basic syntax
 |                  | - ``a[1:2:end]``                   | - step size of 2                |
 |                  | - ``a[3:end]``                     | - ``end`` is last element       |
 |                  | - ``splice!(a,2:3)``               | - Remove items at given indices |
+|                  | - ``splice!(a,2:3, 5:7)``          | - Rm & add items at given inds  |
 +------------------+------------------------------------+---------------------------------+
 | Multidimensional | - ``mat = [1 2; 3 4]``             | - 2×2 Matrix{Int64}             |
 | arrays           | - ``zeros(4,4,4,4)``               | - Zero 4×4×4×4 Array{Float64, 4}|
@@ -323,14 +324,22 @@ explains their purpose.
 +----------------------+---------------------------------------------------------------+
 | Function             |  What it does                                                 |
 +======================+===============================================================+
-| ``dump()``            |                    |
-| ``collect()``          |                             |
-| ``zip()``             |                  |
-|                   |                  |
-|         |                               |
-|         |                               |
-|         |                               |
-|         |                               |
+| dump(a)            | Show full representation of value                   |
+| collect(T, iter)          | Return array of given type with items from iterable                           |
+| zip(a, b)             |                  |
+| minimum(a)                  |                  |
+| maximum(a)        |                               |
+| findfirst        |                               |
+| push!()        |                               |
+| splice!()        |                               |
+| split()        |                               |
+| splice!()        |                               |
+| push!()        |                               |
+| splice!()        |                               |
+| push!()        |                               |
+| splice!()        |                               |
+| push!()        |                               |
+| splice!()        |                               |
 +------------------+------------------------------------------------------------+
 
 	  
