@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parallelization &mdash; Julia for high-performance scientific computing</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/mystnb.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sphinx_lesson.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/overrides.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/togglebutton.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="GPU programming" href="../GPU/" />
+    <link rel="prev" title="Writing performant Julia code" href="../performant-code/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../" class="icon icon-home"> Julia for high-performance scientific computing
+            <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">The lesson</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../motivation/">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/">Special features of Julia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/">Developing in Julia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-science/">Working with data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performant-code/">Writing performant Julia code</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parallelization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#threading">Threading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#distributed-computing">Distributed computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#distributed">&#64;distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmap"><code class="docutils literal notranslate"><span class="pre">pmap</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sharedarrays">SharedArrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#distributedarrays">DistributedArrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes">notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exercises">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#see-also">See also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../GPU/">GPU programming</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup/">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick-reference/">Quick Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/">Instructor’s guide</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Julia for high-performance scientific computing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home"></a> &raquo;</li>
+      <li>Parallelization</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/wikfeldt/julia-for-scicomp/blob/master/content/parallelization.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="parallelization">
+<h1>Parallelization<a class="headerlink" href="#parallelization" title="Permalink to this headline"></a></h1>
+<div class="admonition-questions questions admonition">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>What parallelization options exist in Julia?</p></li>
+<li><p>What are the canonical ways of parallelizing on shared and distributed memory systems?</p></li>
+</ul>
+</div>
+<div class="admonition-objectives objectives admonition">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Get an overview of parallelization in Julia</p></li>
+<li><p>Learn to use the Threads module</p></li>
+<li><p>Learn to use the Distributed package</p></li>
+<li><p>Know when you can use <code class="docutils literal notranslate"><span class="pre">&#64;distributed</span></code> and <code class="docutils literal notranslate"><span class="pre">pmap</span></code></p></li>
+<li><p>Learn to work with SharedArrays and Distributed arrays</p></li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
+<p>WRITEME</p>
+</div>
+<div class="section" id="threading">
+<h2>Threading<a class="headerlink" href="#threading" title="Permalink to this headline"></a></h2>
+<p>We will now walk through how to use multithreading in Julia.
+In the VSCode REPL, let’s see how many threads we have access to:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Threads</span><span class="o">.</span><span class="n">nthreads</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Hmm, but we need more than one thread to be able to gain any performance
+from multithreading.</p>
+<p>Julia can be started with a given number of threads in two ways:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>julia -t <span class="m">4</span>
+<span class="c1"># or (can also set the env-var in e.g. .bashrc)</span>
+<span class="nv">JULIA_NUM_THREADS</span> <span class="o">=</span> <span class="m">4</span> julia
+</pre></div>
+</div>
+<p>This is not possible to do inside VSCode. Instead, we open up the
+“Extension Settings” for the Julia VSCode extension and set the
+“Julia: Num Threads” setting to the number of CPU cores we have on
+our machines (if you’re unsure, just try setting it to 2).
+We can make sure we have access to the correct number of threads
+with the <code class="docutils literal notranslate"><span class="pre">Threads.nthreads()</span></code> function.</p>
+<p>The main multithreading approach is to use the <code class="docutils literal notranslate"><span class="pre">Threads.&#64;threads</span></code> macro
+which parallelizes a <cite>for</cite> loop to run with multiple threads:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">Threads</span><span class="o">.</span><span class="nd">@threads</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="mi">10</span>
+    <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Threads</span><span class="o">.</span><span class="n">threadid</span><span class="p">()</span>
+<span class="k">end</span>
+<span class="n">println</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">&#64;threads</span></code> currently only works on outermost loops.</p>
+<div class="section" id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline"></a></h3>
+<p>WRITEME</p>
+</div>
+</div>
+<div class="section" id="distributed-computing">
+<h2>Distributed computing<a class="headerlink" href="#distributed-computing" title="Permalink to this headline"></a></h2>
+<p>WRITEME: General discussion</p>
+<ul class="simple">
+<li><p>MPI.jl</p></li>
+<li><p>Distributed.jl</p></li>
+<li><p>Kubernetes.jl</p></li>
+<li><p>ClusterManagers</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">throw_darts</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span><span class="p">:</span><span class="n">N</span>
+        <span class="k">if</span> <span class="n">rand</span><span class="p">()</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">rand</span><span class="p">()</span><span class="o">^</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">1</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
+    <span class="k">return</span> <span class="n">n</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">estimate_pi</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">loops</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pmap</span><span class="p">((</span><span class="n">x</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">darts_in_circle</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="mi">1</span><span class="p">:</span><span class="n">loops</span><span class="p">))</span>
+    <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="n">loops</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<div class="section" id="distributed">
+<h3>&#64;distributed<a class="headerlink" href="#distributed" title="Permalink to this headline"></a></h3>
+</div>
+<div class="section" id="pmap">
+<h3><code class="docutils literal notranslate"><span class="pre">pmap</span></code><a class="headerlink" href="#pmap" title="Permalink to this headline"></a></h3>
+</div>
+<div class="section" id="sharedarrays">
+<h3>SharedArrays<a class="headerlink" href="#sharedarrays" title="Permalink to this headline"></a></h3>
+</div>
+<div class="section" id="distributedarrays">
+<h3>DistributedArrays<a class="headerlink" href="#distributedarrays" title="Permalink to this headline"></a></h3>
+</div>
+<div class="section" id="notes">
+<h3>notes<a class="headerlink" href="#notes" title="Permalink to this headline"></a></h3>
+<p>example function to distribute:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@everywhere</span> <span class="k">function</span> <span class="n">compute_pi</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+   <span class="n">series</span> <span class="o">=</span> <span class="mf">1.0</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">N</span>
+      <span class="n">series</span> <span class="o">+=</span> <span class="p">(</span><span class="n">isodd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">?</span> <span class="o">-</span><span class="mi">1</span> <span class="o">:</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+   <span class="k">end</span>
+   <span class="k">return</span> <span class="mi">4</span><span class="o">*</span><span class="n">series</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>Summary<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<p>One should choose a distributed mechanism that fits with the
+time and memory parameters of your problem</p>
+<ul class="simple">
+<li><p>&#64;distributed is good for reductions and even relatively fast inner loops with limited explicit data transfer</p></li>
+<li><p>pmap is good for expensive inner loops that return a value</p></li>
+<li><p>SharedArrays can be an easier drop-in replacement for threading-like behaviors (on a single machine)</p></li>
+<li><p>DistributedArrays lets the data do the work splitting</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline"></a></h2>
+<div class="admonition-multithreading-heatequation-jl exercise important admonition">
+<p class="admonition-title">Multithreading HeatEquation.jl</p>
+<p>Consider the double for loop in the <code class="docutils literal notranslate"><span class="pre">evolve!</span></code> function.
+Can it safely be threaded, i.e. is there any risk of race
+conditions?</p>
+<ul>
+<li><p>Insert the <code class="docutils literal notranslate"><span class="pre">Threads.&#64;threads</span></code> macro in the right location.</p></li>
+<li><p>Measure its effects with <code class="docutils literal notranslate"><span class="pre">&#64;benchmark</span></code>.
+Since it’s cumbersome to change the “Julia: Num Threads” option
+in VSCode and relaunch the Julia REPL over and over, use the
+<cite>example.jl</cite> script instead: comment out the visualization and
+insert something like:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">bench_results</span> <span class="o">=</span> <span class="nd">@benchmark</span> <span class="n">simulate!</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">prev</span><span class="p">,</span> <span class="n">nsteps</span><span class="p">)</span>
+<span class="n">println</span><span class="p">(</span><span class="n">minimum</span><span class="p">(</span><span class="n">bench_results</span><span class="o">.</span><span class="n">times</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+<li><p>Now run with different number of threads from a terminal using
+<code class="docutils literal notranslate"><span class="pre">julia</span> <span class="pre">--project=.</span> <span class="pre">-t</span> <span class="pre">N</span> <span class="pre">example.jl</span></code> and observe the scaling.</p></li>
+<li><p>Try increasing the problem size (e.g. <code class="docutils literal notranslate"><span class="pre">nx=ny=10_000</span></code>) while lowering the
+number of time steps (e.g. <code class="docutils literal notranslate"><span class="pre">nsteps</span> <span class="pre">=</span> <span class="pre">20</span></code>). Does it scale better?</p></li>
+</ul>
+</div>
+<div class="admonition-using-sharedarrays-with-heatequation exercise important admonition">
+<p class="admonition-title">Using SharedArrays with Heatequation</p>
+<p>Open up the Heatequation.jl package in VSCode and read the “SharedArrayHint”
+comments. Think about what you should do, and then try doing it.
+After you’re done, benchmark a few test runs.</p>
+<div class="admonition-solution solution important dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Switch to the <cite>SharedArrays</cite> branch of the repository (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">SharedArrays</span></code>)
+and have a look at the code.</p>
+</div>
+</div>
+<div class="admonition-using-distributedarrays-with-heatequation exercise important admonition">
+<p class="admonition-title">Using DistributedArrays with Heatequation</p>
+<p>Open up the Heatequation.jl package in VSCode and read the “DistributedArrayHint”
+comments. Think about what you should do, and then try doing it.
+After you’re done, benchmark a few test runs.</p>
+<div class="admonition-solution solution important dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>Switch to the <cite>DistributedArrays</cite> branch of the repository (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">DistributedArrays</span></code>)
+and have a look at the code.</p>
+</div>
+</div>
+</div>
+<div class="section" id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.julialang.org/en/v1/manual/multi-threading/">https://docs.julialang.org/en/v1/manual/multi-threading/</a></p></li>
+<li><p><a class="reference external" href="https://julialang.org/blog/2019/07/multithreading/">https://julialang.org/blog/2019/07/multithreading/</a></p></li>
+<li><p><a class="reference external" href="https://docs.julialang.org/en/v1/manual/performance-tips/">https://docs.julialang.org/en/v1/manual/performance-tips/</a></p></li>
+<li><p><a class="reference external" href="https://docs.julialang.org/en/v1/manual/distributed-computing/">https://docs.julialang.org/en/v1/manual/distributed-computing/</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../performant-code/" class="btn btn-neutral float-left" title="Writing performant Julia code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../GPU/" class="btn btn-neutral float-right" title="GPU programming" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, EuroCC National Competence Center Sweden.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
